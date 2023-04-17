@@ -1,9 +1,8 @@
 import 'package:ai_girl_friends/common/failure.dart';
-import 'package:ai_girl_friends/data/remote_config/repository/remote_config_repository_impl.dart';
+import 'package:ai_girl_friends/di/injection.dart';
 import 'package:ai_girl_friends/domain/remote_config/model/remote_config.dart';
 import 'package:ai_girl_friends/domain/remote_config/repository/remote_config_repository.dart';
 import 'package:dartz/dartz.dart' hide State;
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,10 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final RemoteConfigRepository _remoteConfigRepository =
-      RemoteConfigRepositoryImpl(
-    firebaseRemoteConfig: FirebaseRemoteConfig.instance,
-  );
+  final RemoteConfigRepository _remoteConfigRepository = getIt();
 
   @override
   Widget build(BuildContext context) {
