@@ -1,7 +1,7 @@
 import 'package:ai_girl_friends/common/failure.dart';
 import 'package:ai_girl_friends/di/injection.dart';
 import 'package:ai_girl_friends/domain/remote_config/model/remote_config.dart';
-import 'package:ai_girl_friends/domain/remote_config/repository/remote_config_repository.dart';
+import 'package:ai_girl_friends/domain/remote_config/usecase/get_remote_config.dart';
 import 'package:dartz/dartz.dart' hide State;
 import 'package:flutter/material.dart';
 
@@ -13,14 +13,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final RemoteConfigRepository _remoteConfigRepository = getIt();
+  final GetRemoteConfig _getRemoteConfig = getIt();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: FutureBuilder<Either<Failure, RemoteConfig>>(
-          future: _remoteConfigRepository.getRemoteConfig(),
+          future: _getRemoteConfig(),
           builder: (BuildContext context,
               AsyncSnapshot<Either<Failure, RemoteConfig>> snapshot) {
             return snapshot.hasData

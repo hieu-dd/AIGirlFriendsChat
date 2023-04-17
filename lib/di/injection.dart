@@ -1,5 +1,6 @@
 import 'package:ai_girl_friends/data/remote_config/repository/remote_config_repository_impl.dart';
 import 'package:ai_girl_friends/domain/remote_config/repository/remote_config_repository.dart';
+import 'package:ai_girl_friends/domain/remote_config/usecase/get_remote_config.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,4 +14,5 @@ Future<void> configureDependencies() async {
     sharedPreferences: await getIt.getAsync(),
     firebaseRemoteConfig: FirebaseRemoteConfig.instance,
   ));
+  getIt.registerFactory(() => GetRemoteConfig(repository: getIt()));
 }
