@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "570743299411",
+    "project_id": "ai-chatbot-5f565",
+    "storage_bucket": "ai-chatbot-5f565.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570743299411:android:92687bd9951954ac4a15a6",
+        "android_client_info": {
+          "package_name": "com.d2brothers.aigirls.ai_girl_friends"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "570743299411-ermjrdgrr6r317vdklsrn9snfjq9gbk3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0IBo7vkjOus1ZCUMyC95rUmMyDP0k0ho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "570743299411-ermjrdgrr6r317vdklsrn9snfjq9gbk3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "570743299411-cldokoqobetk1os1n55vflsapsnr29il.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.d2brothers.aigirls.aiGirlFriends"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570743299411:android:81b89fda5623f5ba4a15a6",
+        "android_client_info": {
+          "package_name": "com.example.aichatbot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "570743299411-2jl044189ggb0t2d41nvhsq8vscopa2v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aichatbot",
+            "certificate_hash": "a961720783b3c513acc85c94666f7ac2f9685971"
+          }
+        },
+        {
+          "client_id": "570743299411-ermjrdgrr6r317vdklsrn9snfjq9gbk3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0IBo7vkjOus1ZCUMyC95rUmMyDP0k0ho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "570743299411-ermjrdgrr6r317vdklsrn9snfjq9gbk3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "570743299411-cldokoqobetk1os1n55vflsapsnr29il.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.d2brothers.aigirls.aiGirlFriends"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
