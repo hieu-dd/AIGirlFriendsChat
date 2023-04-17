@@ -1,4 +1,4 @@
-import 'package:ai_girl_friends/domain/remote_config/model/System_prompt.dart';
+import 'system_prompt.dart';
 
 class Prompt extends SystemPrompt {
   final int id;

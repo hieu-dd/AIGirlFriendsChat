@@ -1,5 +1,5 @@
-import 'Prompt.dart';
-import 'System_prompt.dart';
+import 'prompt.dart';
+import 'system_prompt.dart';
 
 class RemoteConfig {
   final String userPrompt;
