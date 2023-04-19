@@ -26,4 +26,12 @@ class UserDao {
     );
     return User.fromJson(result.first);
   }
+
+  Future<User> findMe() async {
+    var db = await databaseHelper.db;
+    var result = await db.query(
+      databaseHelper.userTable,
+    );
+    return User.fromJson(result.first);
+  }
 }

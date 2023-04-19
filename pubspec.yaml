@@ -38,6 +38,7 @@ dependencies:
   http: ^0.13.5
   shared_preferences: ^2.1.0
   riverpod: ^2.3.4
+  flutter_riverpod: ^2.3.4
   firebase_core: ^2.9.0
   firebase_remote_config: ^4.0.0
   sqflite: ^2.2.6

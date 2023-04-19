@@ -3,6 +3,9 @@ import 'package:ai_girl_friends/common/shared_preferences/shared_preference_help
 import 'package:ai_girl_friends/data/remote_config/repository/remote_config_repository_impl.dart';
 import 'package:ai_girl_friends/domain/remote_config/repository/remote_config_repository.dart';
 import 'package:ai_girl_friends/domain/remote_config/usecase/get_remote_config.dart';
+import 'package:ai_girl_friends/domain/user/data/repository/user_repository_impl.dart';
+import 'package:ai_girl_friends/domain/user/repository/user_repository.dart';
+import 'package:ai_girl_friends/screen/auth_provider.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,4 +22,6 @@ Future<void> configureDependencies() async {
   ));
   getIt.registerFactory(() => GetRemoteConfig(repository: getIt()));
   getIt.registerFactory(() => UserDao());
+  getIt.registerSingleton<UserRepository>(UserRepositoryImpl(getIt()));
+  getIt.registerSingleton(AuthNotifier(getIt()));
 }
