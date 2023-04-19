@@ -3,6 +3,7 @@ import 'package:ai_girl_friends/domain/user/model/user.dart';
 import 'package:ai_girl_friends/domain/user/repository/user_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
 
 class AuthNotifier extends ChangeNotifier {
   final UserRepository repository;
@@ -21,15 +22,24 @@ class AuthNotifier extends ChangeNotifier {
   void _findUser() async {
     final result = await repository.findMe();
     result.fold((l) {
-      _me = null;
+      if (_me != null) {
+        _me = null;
+        notifyListeners();
+      }
     }, (r) {
       _me = r;
+      notifyListeners();
     });
-    notifyListeners();
   }
 
-  void login() async {
-    await repository.login();
+  void loginWithUser(
+      {required String name,
+      required int age,
+      required String genderValue}) async {
+    final gender =
+        Gender.values.firstWhere((element) => element.name == genderValue);
+    await repository.loginWithUser(
+        User(id: Uuid().v4(), name: name, age: age, gender: gender));
     _findUser();
   }
 }

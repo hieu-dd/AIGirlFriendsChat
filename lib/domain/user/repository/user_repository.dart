@@ -5,5 +5,5 @@ import '../model/user.dart';
 
 abstract class UserRepository {
   Future<Either<Failure, User>> findMe();
-  Future<void> login();
+  Future<void> loginWithUser(User user);
 }

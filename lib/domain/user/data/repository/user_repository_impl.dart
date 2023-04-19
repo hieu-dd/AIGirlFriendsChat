@@ -3,7 +3,6 @@ import 'package:ai_girl_friends/common/failure.dart';
 import 'package:ai_girl_friends/domain/user/model/user.dart';
 import 'package:ai_girl_friends/domain/user/repository/user_repository.dart';
 import 'package:dartz/dartz.dart';
-import 'package:uuid/uuid.dart';
 
 class UserRepositoryImpl implements UserRepository {
   final UserDao userDao;
@@ -21,14 +20,9 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<void> login() async {
+  Future<void> loginWithUser(User user) async {
     try {
-      await userDao.insertUser(User(
-        id: Uuid().v4(),
-        name: "Hieu",
-        age: 28,
-        gender: Gender.male,
-      ));
+      await userDao.insertUser(user);
     } catch (e) {}
   }
 }
