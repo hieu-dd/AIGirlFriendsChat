@@ -19,14 +19,17 @@ class ConversationNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> insertConversation(Conversation conversation) async {
+  Future<void> insertConversation(
+      Conversation conversation, bool needNotify) async {
     await conversationRepository.insertConversation(conversation);
-    getAllConversations();
+    if (needNotify) {
+      getAllConversations();
+    }
   }
 
   Future<void> insertConversations(List<Conversation> conversations) async {
     conversations.forEach((conversation) async {
-      await insertConversation(conversation);
+      await insertConversation(conversation, false);
     });
     getAllConversations();
   }

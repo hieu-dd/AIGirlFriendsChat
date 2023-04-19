@@ -7,23 +7,27 @@ class UserDao {
 
   Future<int> insertUser(User user) async {
     var db = await databaseHelper.db;
-    return await db.insert(
-      databaseHelper.userTable,
-      {
-        ...user.toJson(),
-        'updatedAt': DateTime.now().microsecondsSinceEpoch,
-      },
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    return await db.transaction((txn) async {
+      return await txn.insert(
+        databaseHelper.userTable,
+        {
+          ...user.toJson(),
+          'updatedAt': DateTime.now().microsecondsSinceEpoch,
+        },
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    });
   }
 
   Future<User> getUserById(String userId) async {
     var db = await databaseHelper.db;
-    var result = await db.query(
-      databaseHelper.userTable,
-      where: '${databaseHelper.colUserId}=?',
-      whereArgs: [userId],
-    );
+    var result = await db.transaction((txn) async {
+      return await txn.query(
+        databaseHelper.userTable,
+        where: '${databaseHelper.colUserId}=?',
+        whereArgs: [userId],
+      );
+    });
     return User.fromJson(result.first);
   }
 

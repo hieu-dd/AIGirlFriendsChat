@@ -7,24 +7,28 @@ class ParticipantDao {
 
   Future<int> insertParticipant(Participant user) async {
     var db = await databaseHelper.db;
-    return await db.insert(
-      databaseHelper.participantTable,
-      {
-        ...user.toDbJson(),
-        'updatedAt': DateTime.now().microsecondsSinceEpoch,
-      },
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    return await db.transaction((txn) async {
+      return await txn.insert(
+        databaseHelper.participantTable,
+        {
+          ...user.toDbJson(),
+          'updatedAt': DateTime.now().microsecondsSinceEpoch,
+        },
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    });
   }
 
   Future<List<Participant>> getParticipantsByConversationId(
       int conversationId) async {
     var db = await databaseHelper.db;
-    var result = await db.query(
-      databaseHelper.participantTable,
-      where: '${databaseHelper.colParticipantConversationId}=?',
-      whereArgs: [conversationId],
-    );
+    var result = await db.transaction((txn) async {
+      return await txn.query(
+        databaseHelper.participantTable,
+        where: '${databaseHelper.colParticipantConversationId}=?',
+        whereArgs: [conversationId],
+      );
+    });
     return result.map((e) => Participant.fromDbJson(e)).toList();
   }
 }

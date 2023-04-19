@@ -24,11 +24,11 @@ class ConversationRepositoryImpl implements ConversationRepository {
   @override
   Future<List<Conversation>> getAllConversation() async {
     final conversations = await conversationDao.getAllConversations();
-    final List<Conversation> newConversations = [];
-    conversations.forEach((conversation) async {
-      newConversations.add(await _updateConversation(conversation));
+    final futures = conversations.map((conversation) async {
+      return await _updateConversation(conversation);
     });
-    return newConversations;
+    final results = await Future.wait(futures);
+    return results.toList();
   }
 
   Future<Conversation> _updateConversation(Conversation conversation) async {
@@ -39,17 +39,17 @@ class ConversationRepositoryImpl implements ConversationRepository {
             .toList();
     final messages =
         await messageDao.getMessagesByConversationId(conversationId);
-    conversation
-      ..participants = participants
-      ..messages = messages;
+    conversation.participants = participants;
+    conversation.messages = messages;
+
     return conversation;
   }
 
   @override
   Future<void> insertConversation(Conversation conversation) async {
+    final conversationId =
+        await conversationDao.insertConversation(conversation);
     conversation.participants.forEach((user) async {
-      final conversationId =
-          await conversationDao.insertConversation(conversation);
       await userDao.insertUser(user);
       final participantId = await participantDao.insertParticipant(
           Participant(conversationId: conversationId, userId: user.id));
