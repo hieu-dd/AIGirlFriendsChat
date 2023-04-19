@@ -25,7 +25,7 @@ class DatabaseHelper {
 
   // Message table
   String colMessageId = 'id';
-  String colMessageConversationId = 'conversation_id';
+  String colMessageConversationId = 'conversationId';
   String colMessageSender = 'sender';
   String colMessageMessage = 'message';
 
@@ -37,8 +37,8 @@ class DatabaseHelper {
   String colUserIsMe = 'isMe';
 
   // Participant table
-  String colParticipantUserId = 'user_id';
-  String colParticipantConversationId = 'conversation_id';
+  String colParticipantUserId = 'userId';
+  String colParticipantConversationId = 'conversationId';
 
   Future<Database> get db async {
     _db ??= await _initDb();
@@ -58,7 +58,7 @@ class DatabaseHelper {
 
   void _createDb(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE $conversationTable($colConversationId INTEGER PRIMARY KEY AUTOINCREMENT, $colConversationType TEXT NOT NULL, $colConversationTitle TEXT, $colConversationCreator TEXT NOT NULL, $colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL)');
+        'CREATE TABLE $conversationTable($colConversationId INTEGER PRIMARY KEY AUTOINCREMENT, $colConversationType INTEGER NOT NULL, $colConversationTitle TEXT, $colConversationCreator TEXT NOT NULL, $colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL)');
     await db.execute(
         'CREATE TABLE $messageTable($colMessageId INTEGER PRIMARY KEY AUTOINCREMENT, $colMessageConversationId INTEGER, $colMessageSender TEXT NOT NULL, $colMessageMessage TEXT NOT NULL, $colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL, FOREIGN KEY($colMessageConversationId) REFERENCES $conversationTable($colConversationId))');
     await db.execute(

@@ -41,6 +41,13 @@ class User {
       ..createdAt = json['createdAt'] ?? DateTime.now().microsecondsSinceEpoch
       ..updatedAt = json['updatedAt'] ?? DateTime.now().microsecondsSinceEpoch;
   }
+
+  factory User.fromId(String id) => User(
+        id: id,
+        name: '',
+        age: 0,
+        gender: Gender.other,
+      );
 }
 
 enum Gender {

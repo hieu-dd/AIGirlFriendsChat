@@ -1,5 +1,5 @@
 import 'package:ai_girl_friends/domain/user/model/user.dart';
-import 'package:ai_girl_friends/screen/auth_provider.dart';
+import 'package:ai_girl_friends/provider/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

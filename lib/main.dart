@@ -1,4 +1,4 @@
-import 'package:ai_girl_friends/screen/auth_provider.dart';
+import 'package:ai_girl_friends/provider/auth_provider.dart';
 import 'package:ai_girl_friends/screen/routes/AppRoutes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
