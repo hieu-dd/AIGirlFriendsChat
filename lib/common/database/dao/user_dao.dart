@@ -31,6 +31,8 @@ class UserDao {
     var db = await databaseHelper.db;
     var result = await db.query(
       databaseHelper.userTable,
+      where: '${databaseHelper.colUserIsMe}=?',
+      whereArgs: [1],
     );
     return User.fromJson(result.first);
   }

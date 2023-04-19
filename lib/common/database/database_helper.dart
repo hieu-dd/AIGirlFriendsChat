@@ -34,6 +34,7 @@ class DatabaseHelper {
   String colUserName = 'name';
   String colUserAge = 'age';
   String colUserGender = 'gender';
+  String colUserIsMe = 'isMe';
 
   // Participant table
   String colParticipantUserId = 'user_id';
@@ -61,7 +62,7 @@ class DatabaseHelper {
     await db.execute(
         'CREATE TABLE $messageTable($colMessageId INTEGER PRIMARY KEY AUTOINCREMENT, $colMessageConversationId INTEGER, $colMessageSender TEXT NOT NULL, $colMessageMessage TEXT NOT NULL, $colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL, FOREIGN KEY($colMessageConversationId) REFERENCES $conversationTable($colConversationId))');
     await db.execute(
-        'CREATE TABLE $userTable($colUserId TEXT PRIMARY KEY, $colUserName TEXT NOT NULL ,$colUserAge INTEGER NOT NULL, $colUserGender INTEGER NOT NULL, $colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL)');
+        'CREATE TABLE $userTable($colUserId TEXT PRIMARY KEY, $colUserName TEXT NOT NULL ,$colUserAge INTEGER NOT NULL, $colUserGender INTEGER NOT NULL, $colUserIsMe INTEGER NOT NULL ,$colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL)');
     await db.execute(
         'CREATE TABLE $participantTable($colParticipantUserId TEXT, $colParticipantConversationId INTEGER, $colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL, FOREIGN KEY($colParticipantUserId) REFERENCES $userTable($colUserId), FOREIGN KEY($colParticipantConversationId) REFERENCES $conversationTable($colConversationId))');
   }

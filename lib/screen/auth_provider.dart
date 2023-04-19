@@ -38,8 +38,8 @@ class AuthNotifier extends ChangeNotifier {
       required String genderValue}) async {
     final gender =
         Gender.values.firstWhere((element) => element.name == genderValue);
-    await repository.loginWithUser(
-        User(id: Uuid().v4(), name: name, age: age, gender: gender));
+    await repository.loginWithUser(User(
+        id: Uuid().v4(), name: name, age: age, gender: gender, isMe: true));
     _findUser();
   }
 }

@@ -3,6 +3,7 @@ class User {
   final String name;
   final int age;
   final Gender gender;
+  bool isMe;
   late int createdAt;
   late int updatedAt;
 
@@ -11,6 +12,7 @@ class User {
     required this.name,
     required this.age,
     required this.gender,
+    this.isMe = false,
   }) {
     createdAt = DateTime.now().microsecondsSinceEpoch;
     updatedAt = DateTime.now().microsecondsSinceEpoch;
@@ -24,6 +26,7 @@ class User {
       'gender': gender.index,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
+      'isMe': isMe ? 1 : 0,
     };
   }
 
@@ -33,6 +36,7 @@ class User {
       name: json['name'],
       age: json['age'],
       gender: Gender.values[json['gender']],
+      isMe: json['isMe'] == 1,
     )
       ..createdAt = json['createdAt'] ?? DateTime.now().microsecondsSinceEpoch
       ..updatedAt = json['updatedAt'] ?? DateTime.now().microsecondsSinceEpoch;
