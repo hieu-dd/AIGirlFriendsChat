@@ -15,7 +15,7 @@ class DatabaseHelper {
 
   //common
   String colCreatedAt = 'createdAt';
-  String colUpdateAt = 'updateAt';
+  String colUpdateAt = 'updatedAt';
 
   // Conversation table
   String colConversationId = 'id';
@@ -57,12 +57,12 @@ class DatabaseHelper {
 
   void _createDb(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE $conversationTable($colConversationId INTEGER PRIMARY KEY AUTOINCREMENT, $colConversationType TEXT NOT NULL, $colConversationCreator TEXT, $colConversationCreator TEXT NOT NULL, $colCreatedAt TEXT NOT NULL, $colUpdateAt TEXT NOT NULL)');
+        'CREATE TABLE $conversationTable($colConversationId INTEGER PRIMARY KEY AUTOINCREMENT, $colConversationType TEXT NOT NULL, $colConversationTitle TEXT, $colConversationCreator TEXT NOT NULL, $colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL)');
     await db.execute(
-        'CREATE TABLE $messageTable($colMessageId INTEGER PRIMARY KEY AUTOINCREMENT, $colMessageConversationId INTEGER, $colMessageSender TEXT NOT NULL, $colMessageMessage TEXT NOT NULL, $colCreatedAt TEXT NOT NULL, $colUpdateAt TEXT NOT NULL, FOREIGN KEY($colMessageConversationId) REFERENCES $conversationTable($colConversationId))');
+        'CREATE TABLE $messageTable($colMessageId INTEGER PRIMARY KEY AUTOINCREMENT, $colMessageConversationId INTEGER, $colMessageSender TEXT NOT NULL, $colMessageMessage TEXT NOT NULL, $colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL, FOREIGN KEY($colMessageConversationId) REFERENCES $conversationTable($colConversationId))');
     await db.execute(
-        'CREATE TABLE $userTable($colUserId TEXT PRIMARY KEY, $colUserName TEXT NOT NULL ,$colUserAge INTEGER NOT NULL, $colUserGender TEXT NOT NULL, $colCreatedAt TEXT NOT NULL, $colUpdateAt TEXT NOT NULL)');
+        'CREATE TABLE $userTable($colUserId TEXT PRIMARY KEY, $colUserName TEXT NOT NULL ,$colUserAge INTEGER NOT NULL, $colUserGender INTEGER NOT NULL, $colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL)');
     await db.execute(
-        'CREATE TABLE $participantTable($colParticipantUserId TEXT, $colParticipantConversationId INTEGER, $colCreatedAt TEXT NOT NULL, $colUpdateAt TEXT NOT NULL, FOREIGN KEY($colParticipantUserId) REFERENCES $userTable($colUserId), FOREIGN KEY($colParticipantConversationId) REFERENCES $conversationTable($colConversationId))');
+        'CREATE TABLE $participantTable($colParticipantUserId TEXT, $colParticipantConversationId INTEGER, $colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL, FOREIGN KEY($colParticipantUserId) REFERENCES $userTable($colUserId), FOREIGN KEY($colParticipantConversationId) REFERENCES $conversationTable($colConversationId))');
   }
 }

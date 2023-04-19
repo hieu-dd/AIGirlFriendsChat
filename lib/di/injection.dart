@@ -1,3 +1,4 @@
+import 'package:ai_girl_friends/common/database/dao/user_dao.dart';
 import 'package:ai_girl_friends/common/shared_preferences/shared_preference_helper.dart';
 import 'package:ai_girl_friends/data/remote_config/repository/remote_config_repository_impl.dart';
 import 'package:ai_girl_friends/domain/remote_config/repository/remote_config_repository.dart';
@@ -17,4 +18,5 @@ Future<void> configureDependencies() async {
     firebaseRemoteConfig: FirebaseRemoteConfig.instance,
   ));
   getIt.registerFactory(() => GetRemoteConfig(repository: getIt()));
+  getIt.registerFactory(() => UserDao());
 }

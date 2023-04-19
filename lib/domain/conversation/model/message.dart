@@ -4,14 +4,23 @@ class Message {
   final int id;
   final User sender;
   final String message;
-  final String createdAt;
-  final String updateAt;
+  late int createdAt;
+  late int updatedAt;
 
   Message({
     required this.id,
     required this.sender,
     required this.message,
-    required this.createdAt,
-    required this.updateAt,
-  });
+  }) {
+    createdAt = DateTime.now().microsecondsSinceEpoch;
+    updatedAt = DateTime.now().microsecondsSinceEpoch;
+  }
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'id': id,
+        'sender': sender.id,
+        'message': message,
+        'createdAt': createdAt,
+        'updatedAt': updatedAt
+      };
 }

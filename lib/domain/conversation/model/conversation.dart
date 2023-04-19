@@ -7,8 +7,8 @@ class Conversation {
   final User creator;
   final List<User> participants;
   final List<Message> messages;
-  final String createdAt;
-  final String updatedAt;
+  late int createdAt;
+  late int updatedAt;
 
   Conversation({
     required this.id,
@@ -16,9 +16,10 @@ class Conversation {
     required this.creator,
     required this.participants,
     required this.messages,
-    required this.createdAt,
-    required this.updatedAt,
-  });
+  }) {
+    createdAt = DateTime.now().microsecondsSinceEpoch;
+    updatedAt = DateTime.now().microsecondsSinceEpoch;
+  }
 }
 
 enum ConversationType { single, group }
