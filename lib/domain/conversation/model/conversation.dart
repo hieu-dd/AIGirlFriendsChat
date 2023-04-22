@@ -20,27 +20,6 @@ class Conversation {
     createdAt = DateTime.now().microsecondsSinceEpoch;
     updatedAt = DateTime.now().microsecondsSinceEpoch;
   }
-
-  Map<String, dynamic> toDbJson() => {
-        'id': id,
-        'type': type.index,
-        'creator': creator.id,
-        'createdAt': createdAt,
-        'updatedAt': updatedAt,
-      };
-
-  factory Conversation.fromDb(
-    Map<String, dynamic> json,
-  ) =>
-      Conversation(
-        id: json['id'],
-        type: ConversationType.values[json['type']],
-        creator: User.fromId(json['creator']),
-        participants: [],
-        messages: [],
-      )
-        ..createdAt = json['createdAt']
-        ..updatedAt = json['updatedAt'];
 }
 
 enum ConversationType { single, group }

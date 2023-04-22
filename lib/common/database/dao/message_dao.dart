@@ -1,17 +1,17 @@
 import 'package:ai_girl_friends/common/database/database_helper.dart';
-import 'package:ai_girl_friends/domain/conversation/model/message.dart';
+import 'package:ai_girl_friends/data/conversation/model/local/local_message.dart';
 import 'package:sqflite/sqflite.dart';
 
 class MessageDao {
   final DatabaseHelper databaseHelper = DatabaseHelper.instance;
 
-  Future<int> insertMessage(Message message) async {
+  Future<int> insertMessage(LocalMessage local) async {
     var db = await databaseHelper.db;
     return await db.transaction((txn) async {
       return txn.insert(
         databaseHelper.messageTable,
         {
-          ...message.toDbJson(),
+          ...local.toDbJson(),
           'updatedAt': DateTime.now().microsecondsSinceEpoch,
         },
         conflictAlgorithm: ConflictAlgorithm.replace,
@@ -19,7 +19,7 @@ class MessageDao {
     });
   }
 
-  Future<List<Message>> getMessagesByConversationId(
+  Future<List<LocalMessage>> getMessagesByConversationId(
     int conversationId,
   ) async {
     var db = await databaseHelper.db;
@@ -31,7 +31,7 @@ class MessageDao {
       );
     });
     return result.map((e) {
-      return Message.fromDbJson(e);
+      return LocalMessage.fromDbJson(e);
     }).toList();
   }
 }

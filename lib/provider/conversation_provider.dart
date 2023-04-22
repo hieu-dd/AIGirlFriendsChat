@@ -28,9 +28,10 @@ class ConversationNotifier extends ChangeNotifier {
   }
 
   Future<void> insertConversations(List<Conversation> conversations) async {
-    conversations.forEach((conversation) async {
+    final futures = conversations.map((conversation) async {
       await insertConversation(conversation, false);
     });
+    await Future.wait(futures);
     getAllConversations();
   }
 }

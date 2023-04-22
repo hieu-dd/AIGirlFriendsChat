@@ -1,11 +1,11 @@
 import 'package:ai_girl_friends/common/database/database_helper.dart';
-import 'package:ai_girl_friends/domain/conversation/model/conversation.dart';
+import 'package:ai_girl_friends/data/conversation/model/local/local_conversation.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ConversationDao {
   final DatabaseHelper databaseHelper = DatabaseHelper.instance;
 
-  Future<int> insertConversation(Conversation conversation) async {
+  Future<int> insertConversation(LocalConversation conversation) async {
     var db = await databaseHelper.db;
     return await db.transaction((txn) async {
       return await txn.insert(
@@ -19,7 +19,7 @@ class ConversationDao {
     });
   }
 
-  Future<Conversation> getConversationById(
+  Future<LocalConversation> getConversationById(
     int conversationId,
   ) async {
     var db = await databaseHelper.db;
@@ -30,16 +30,16 @@ class ConversationDao {
         whereArgs: [conversationId],
       );
     });
-    return Conversation.fromDb(result.first);
+    return LocalConversation.fromDb(result.first);
   }
 
-  Future<List<Conversation>> getAllConversations() async {
+  Future<List<LocalConversation>> getAllConversations() async {
     var db = await databaseHelper.db;
     var result = await db.transaction((txn) async {
       return await txn.query(
         databaseHelper.conversationTable,
       );
     });
-    return result.map((e) => Conversation.fromDb(e)).toList();
+    return result.map((e) => LocalConversation.fromDb(e)).toList();
   }
 }

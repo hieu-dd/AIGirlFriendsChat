@@ -65,11 +65,11 @@ User user3 = User(
   isMe: false,
 );
 Message message1 =
-    Message(id: 1, conversationId: 1, message: 'Message1', sender: user1);
+    Message(id: 1, conversationId: 0, message: 'Message1', sender: user1);
 Message message2 =
-    Message(id: 2, conversationId: 2, message: 'Message2', sender: user2);
+    Message(id: 2, conversationId: 0, message: 'Message2', sender: user2);
 Message message3 =
-    Message(id: 3, conversationId: 3, message: 'Message3', sender: user3);
+    Message(id: 3, conversationId: 0, message: 'Message3', sender: user3);
 
 List<Conversation> conversations = [
   Conversation(
