@@ -1,7 +1,7 @@
 import 'package:ai_girl_friends/domain/conversation/model/message.dart';
 
 class LocalMessage {
-  final int id;
+  int? id;
   final int conversationId;
   late String sender;
   final String message;
@@ -9,7 +9,7 @@ class LocalMessage {
   late int updatedAt;
 
   LocalMessage({
-    required this.id,
+    this.id,
     required this.conversationId,
     required this.message,
     required this.sender,

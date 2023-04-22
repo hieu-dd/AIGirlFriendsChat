@@ -34,7 +34,11 @@ class _ConversationListState extends ConsumerState<ConversationListScreen> {
             .map((conversation) => ListTile(
                   title: Text(conversation.id.toString()),
                   subtitle: Text(conversation.messages.isNotEmpty
-                      ? conversation.messages.first.message
+                      ? conversation.messages.first.message +
+                          "  " +
+                          conversation.participants.length.toString() +
+                          "      " +
+                          conversation.messages.length.toString()
                       : ""),
                 ))
             .toList(),

@@ -64,6 +64,6 @@ class DatabaseHelper {
     await db.execute(
         'CREATE TABLE $userTable($colUserId TEXT PRIMARY KEY, $colUserName TEXT NOT NULL ,$colUserAge INTEGER NOT NULL, $colUserGender INTEGER NOT NULL, $colUserIsMe INTEGER NOT NULL ,$colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL)');
     await db.execute(
-        'CREATE TABLE $participantTable($colParticipantUserId TEXT, $colParticipantConversationId INTEGER, $colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL, FOREIGN KEY($colParticipantUserId) REFERENCES $userTable($colUserId), FOREIGN KEY($colParticipantConversationId) REFERENCES $conversationTable($colConversationId))');
+        'CREATE TABLE $participantTable($colParticipantUserId TEXT NOT NULL, $colParticipantConversationId INTEGER NOT NULL, $colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL, PRIMARY KEY ($colParticipantUserId, $colParticipantConversationId),FOREIGN KEY($colParticipantUserId) REFERENCES $userTable($colUserId), FOREIGN KEY($colParticipantConversationId) REFERENCES $conversationTable($colConversationId))');
   }
 }

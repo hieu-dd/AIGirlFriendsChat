@@ -40,6 +40,7 @@ class LocalConversation {
 
   factory LocalConversation.fromDomain(Conversation conversation) =>
       LocalConversation(
+          id: conversation.id,
           type: conversation.type.index,
           creator: conversation.creator.id,
           title: "")
