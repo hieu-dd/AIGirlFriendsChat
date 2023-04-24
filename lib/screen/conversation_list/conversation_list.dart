@@ -2,6 +2,7 @@ import 'package:ai_girl_friends/domain/conversation/model/message.dart';
 import 'package:ai_girl_friends/provider/conversations_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../domain/conversation/model/conversation.dart';
@@ -31,15 +32,16 @@ class _ConversationListState extends ConsumerState<ConversationListScreen> {
         child: Scaffold(
       body: Column(
         children: conversations
-            .map((conversation) => ListTile(
-                  title: Text(conversation.id.toString()),
-                  subtitle: Text(conversation.messages.isNotEmpty
-                      ? conversation.messages.first.message +
-                          "  " +
-                          conversation.participants.length.toString() +
-                          "      " +
-                          conversation.messages.length.toString()
-                      : ""),
+            .map((conversation) => InkWell(
+                  onTap: () {
+                    context.go('/main/chat/${conversation.id}');
+                  },
+                  child: ListTile(
+                    title: Text(conversation.id.toString()),
+                    subtitle: Text(conversation.messages.isNotEmpty
+                        ? "${conversation.messages.first.message}  ${conversation.participants.length}      ${conversation.messages.length}"
+                        : ""),
+                  ),
                 ))
             .toList(),
       ),
