@@ -1,5 +1,6 @@
 import 'package:ai_girl_friends/domain/conversation/model/message.dart';
 import 'package:ai_girl_friends/provider/conversations_provider.dart';
+import 'package:ai_girl_friends/screen/chat/chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -34,7 +35,9 @@ class _ConversationListState extends ConsumerState<ConversationListScreen> {
         children: conversations
             .map((conversation) => InkWell(
                   onTap: () {
-                    context.go('/main/chat/${conversation.id}');
+                    context.goNamed(ChatScreen.direction, params: {
+                      ChatScreen.argConversationId: conversation.id.toString()
+                    });
                   },
                   child: ListTile(
                     title: Text(conversation.id.toString()),

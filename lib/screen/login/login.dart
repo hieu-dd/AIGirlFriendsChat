@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
+  static const direction = '/login';
+
   const LoginScreen({Key? key}) : super(key: key);
 
   @override

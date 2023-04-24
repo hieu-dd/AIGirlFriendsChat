@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
 class ChatScreen extends ConsumerStatefulWidget {
+  static const direction = 'chat';
+  static const argConversationId = 'conversationId';
   final int conversationId;
 
   ChatScreen({required this.conversationId});

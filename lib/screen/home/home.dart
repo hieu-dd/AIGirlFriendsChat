@@ -6,6 +6,8 @@ import '../../common/database/dao/user_dao.dart';
 import '../../domain/user/model/user.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const direction = '/home';
+
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
