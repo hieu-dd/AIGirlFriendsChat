@@ -19,18 +19,22 @@ class ConversationDao {
     });
   }
 
-  Future<LocalConversation> getConversationById(
+  Future<LocalConversation?> getConversationById(
     int conversationId,
   ) async {
-    var db = await databaseHelper.db;
-    var result = await db.transaction((txn) async {
-      return await txn.query(
-        databaseHelper.conversationTable,
-        where: '${databaseHelper.colConversationId}=?',
-        whereArgs: [conversationId],
-      );
-    });
-    return LocalConversation.fromDb(result.first);
+    try {
+      var db = await databaseHelper.db;
+      var result = await db.transaction((txn) async {
+        return await txn.query(
+          databaseHelper.conversationTable,
+          where: '${databaseHelper.colConversationId}=?',
+          whereArgs: [conversationId],
+        );
+      });
+      return LocalConversation.fromDb(result.first);
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<List<LocalConversation>> getAllConversations() async {

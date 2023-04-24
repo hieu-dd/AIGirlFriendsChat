@@ -1,38 +1,41 @@
-import 'package:ai_girl_friends/domain/conversation/repository/conversation_repository.dart';
-import 'package:flutter/material.dart';
+import 'package:ai_girl_friends/domain/conversation/model/conversation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../di/injection.dart';
-import '../domain/conversation/model/conversation.dart';
+import '../domain/conversation/repository/conversation_repository.dart';
 
 class ConversationNotifier extends ChangeNotifier {
   final ConversationRepository conversationRepository;
 
   ConversationNotifier(this.conversationRepository);
 
-  List<Conversation> _allConversations = [];
+  Conversation? _conversation;
+  int? _conversationId;
 
-  List<Conversation> get allConversation => _allConversations;
+  Conversation? get conversation => _conversation;
 
-  Future<void> getAllConversations() async {
-    _allConversations = await conversationRepository.getAllConversation();
-    notifyListeners();
-  }
+  void getLocalConversation(int conversationId) async {
+    if (_conversationId != conversationId) {
+      _conversation = null;
+      _conversationId = conversationId;
+      notifyListeners();
+    }
 
-  Future<void> insertConversation(
-      Conversation conversation, bool needNotify) async {
-    await conversationRepository.insertConversation(conversation);
-    if (needNotify) {
-      getAllConversations();
+    final result =
+        await conversationRepository.getConversationById(conversationId);
+    if (result != _conversation) {
+      _conversation = result;
+      notifyListeners();
     }
   }
 
-  Future<void> insertConversations(List<Conversation> conversations) async {
-    final futures = conversations.map((conversation) async {
-      await insertConversation(conversation, false);
-    });
-    await Future.wait(futures);
-    getAllConversations();
+  void sendMessage(String message) async {
+    final result =
+        await conversationRepository.sendMessage(_conversationId!, message);
+    if (result != 0) {
+      getLocalConversation(_conversationId!);
+    }
   }
 }
 

@@ -34,6 +34,15 @@ class ConversationRepositoryImpl implements ConversationRepository {
     return results.toList();
   }
 
+  @override
+  Future<Conversation?> getConversationById(int conversationId) async {
+    final conversation =
+        await conversationDao.getConversationById(conversationId);
+    return conversation != null
+        ? _getConversationFromLocal(conversation)
+        : null;
+  }
+
   Future<Conversation> _getConversationFromLocal(
       LocalConversation local) async {
     final conversationId = local.id!;
@@ -60,7 +69,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
   }
 
   @override
-  Future<void> insertConversation(Conversation conversation) async {
+  Future<int> insertConversation(Conversation conversation) async {
     final conversationId = await conversationDao
         .insertConversation(LocalConversation.fromDomain(conversation));
     final insertParticipants = conversation.participants.map((user) async {
@@ -74,6 +83,25 @@ class ConversationRepositoryImpl implements ConversationRepository {
     });
     await Future.wait(insertParticipants);
     await Future.wait(insertMessages);
+    return conversationId;
+  }
+
+  @override
+  Future<int> sendMessage(int conversationId, String message) async {
+    final conversation = await getConversationById(conversationId);
+    if (conversation == null) return 0;
+    final me = await userDao.findMe();
+    final mes =
+        Message(conversationId: conversationId, message: message, sender: me);
+
+    final newConversation = Conversation(
+        id: conversation.id,
+        type: conversation.type,
+        creator: conversation.creator,
+        participants: [...conversation.participants, me],
+        messages: [mes, ...conversation.messages])
+      ..createdAt = conversation.createdAt;
+    return await insertConversation(newConversation);
   }
 
   Message _getMessageFromLocal(LocalMessage local, List<User> participants) {

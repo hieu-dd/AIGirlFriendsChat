@@ -1,5 +1,5 @@
 import 'package:ai_girl_friends/domain/conversation/model/message.dart';
-import 'package:ai_girl_friends/provider/conversation_provider.dart';
+import 'package:ai_girl_friends/provider/conversations_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
@@ -19,14 +19,14 @@ class _ConversationListState extends ConsumerState<ConversationListScreen> {
   void initState() {
     super.initState();
 
-    ref.read(conversationProvider.notifier).insertConversations(conversations);
+    ref.read(conversationsProvider.notifier).insertConversations(conversations);
   }
 
   Future<void> setupData() async {}
 
   @override
   Widget build(BuildContext context) {
-    final conversations = ref.watch(conversationProvider).allConversation;
+    final conversations = ref.watch(conversationsProvider).allConversation;
     return SafeArea(
         child: Scaffold(
       body: Column(

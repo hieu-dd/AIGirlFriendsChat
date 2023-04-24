@@ -1,6 +1,7 @@
 import 'package:ai_girl_friends/domain/user/model/user.dart';
+import 'package:equatable/equatable.dart';
 
-class Message {
+class Message extends Equatable {
   int? id;
   int conversationId;
   late User sender;
@@ -17,4 +18,15 @@ class Message {
     createdAt = DateTime.now().microsecondsSinceEpoch;
     updatedAt = DateTime.now().microsecondsSinceEpoch;
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+        id,
+        conversationId,
+        sender,
+        message,
+        createdAt,
+        updatedAt,
+      ];
 }

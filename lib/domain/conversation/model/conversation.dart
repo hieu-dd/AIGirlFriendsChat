@@ -1,7 +1,9 @@
+import 'package:equatable/equatable.dart';
+
 import '../../user/model/user.dart';
 import 'message.dart';
 
-class Conversation {
+class Conversation extends Equatable {
   final int? id;
   final ConversationType type;
   late User creator;
@@ -20,6 +22,17 @@ class Conversation {
     createdAt = DateTime.now().microsecondsSinceEpoch;
     updatedAt = DateTime.now().microsecondsSinceEpoch;
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        type,
+        creator.id,
+        participants,
+        messages,
+        createdAt,
+        updatedAt,
+      ];
 }
 
 enum ConversationType { single, group }

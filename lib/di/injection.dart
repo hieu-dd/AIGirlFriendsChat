@@ -12,6 +12,7 @@ import 'package:ai_girl_friends/domain/user/data/repository/user_repository_impl
 import 'package:ai_girl_friends/domain/user/repository/user_repository.dart';
 import 'package:ai_girl_friends/provider/auth_provider.dart';
 import 'package:ai_girl_friends/provider/conversation_provider.dart';
+import 'package:ai_girl_friends/provider/conversations_provider.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -41,5 +42,6 @@ Future<void> configureDependencies() async {
   );
   getIt.registerSingleton<UserRepository>(UserRepositoryImpl(getIt()));
   getIt.registerSingleton(AuthNotifier(getIt()));
+  getIt.registerSingleton(ConversationsNotifier(getIt()));
   getIt.registerSingleton(ConversationNotifier(getIt()));
 }
