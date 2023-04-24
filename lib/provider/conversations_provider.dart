@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../di/injection.dart';
 import '../domain/conversation/model/conversation.dart';
+import '../domain/user/model/user.dart';
 
 class ConversationsNotifier extends ChangeNotifier {
   final ConversationRepository conversationRepository;
@@ -32,6 +33,13 @@ class ConversationsNotifier extends ChangeNotifier {
       await insertConversation(conversation, false);
     });
     await Future.wait(futures);
+    getAllConversations();
+  }
+
+  Future<void> createSingleConversations(List<User> users) async {
+    final ids = users.map((user) async =>
+        await conversationRepository.createSingleConversation(user));
+    await Future.wait(ids);
     getAllConversations();
   }
 }

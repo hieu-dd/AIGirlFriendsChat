@@ -1,5 +1,5 @@
 import 'package:ai_girl_friends/screen/chat/chat.dart';
-import 'package:ai_girl_friends/screen/conversation_list/conversation_list.dart';
+import 'package:ai_girl_friends/screen/girl_list/girl_friend_list.dart';
 import 'package:ai_girl_friends/screen/home/home.dart';
 import 'package:ai_girl_friends/screen/login/login.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +21,7 @@ GoRouter appRouter({required bool isLogin}) => GoRouter(
         ),
         GoRoute(
             path: HomeScreen.direction,
-            builder: (context, state) => ConversationListScreen(),
+            builder: (context, state) => GirlFriendListScreen(),
             routes: [
               GoRoute(
                 name: ChatScreen.direction,

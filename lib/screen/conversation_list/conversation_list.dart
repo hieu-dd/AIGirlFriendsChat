@@ -20,8 +20,11 @@ class _ConversationListState extends ConsumerState<ConversationListScreen> {
   @override
   void initState() {
     super.initState();
-
-    ref.read(conversationsProvider.notifier).insertConversations(conversations);
+    Future.delayed(const Duration(), () {
+      ref
+          .read(conversationsProvider.notifier)
+          .insertConversations(conversations);
+    });
   }
 
   Future<void> setupData() async {}

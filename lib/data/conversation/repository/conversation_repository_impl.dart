@@ -104,6 +104,23 @@ class ConversationRepositoryImpl implements ConversationRepository {
     return await insertConversation(newConversation);
   }
 
+  @override
+  Future<int> createSingleConversation(User user) async {
+    final local = await conversationDao.getConversationByUser(user.id);
+    if (local != null) {
+      return (await _getConversationFromLocal(local)).id!;
+    } else {
+      final me = await userDao.findMe();
+      final newConversation = Conversation(
+        type: ConversationType.single,
+        creator: me,
+        participants: [me, user],
+        messages: [],
+      );
+      return await insertConversation(newConversation);
+    }
+  }
+
   Message _getMessageFromLocal(LocalMessage local, List<User> participants) {
     final sender = participants.firstWhere((p) => p.id == local.sender);
     return Message(

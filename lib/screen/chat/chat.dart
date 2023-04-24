@@ -18,7 +18,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(conversationProvider).getLocalConversation(widget.conversationId);
+    Future.delayed(const Duration(), () {
+      ref
+          .read(conversationProvider)
+          .getLocalConversation(widget.conversationId);
+    });
   }
 
   @override

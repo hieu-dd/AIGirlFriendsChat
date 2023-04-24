@@ -1,5 +1,7 @@
 import 'package:ai_girl_friends/domain/conversation/model/conversation.dart';
 
+import '../../user/model/user.dart';
+
 abstract class ConversationRepository {
   Future<List<Conversation>> getAllConversation();
 
@@ -8,4 +10,6 @@ abstract class ConversationRepository {
   Future<int> insertConversation(Conversation conversation);
 
   Future<int> sendMessage(int conversationId, String message);
+
+  Future<int> createSingleConversation(User user);
 }
