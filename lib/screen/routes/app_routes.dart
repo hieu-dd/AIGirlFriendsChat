@@ -1,6 +1,5 @@
 import 'package:ai_girl_friends/provider/auth_provider.dart';
 import 'package:ai_girl_friends/screen/chat/chat.dart';
-import 'package:ai_girl_friends/screen/girl_list/girl_friend_list.dart';
 import 'package:ai_girl_friends/screen/home/home.dart';
 import 'package:ai_girl_friends/screen/login/login.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,7 +24,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
           path: HomeScreen.direction,
-          builder: (context, state) => GirlFriendListScreen(),
+          builder: (context, state) => HomeScreen(),
           routes: [
             GoRoute(
               name: ChatScreen.direction,
