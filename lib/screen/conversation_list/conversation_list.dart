@@ -10,6 +10,7 @@ import '../../domain/conversation/model/conversation.dart';
 import '../../domain/user/model/user.dart';
 
 class ConversationListScreen extends ConsumerStatefulWidget {
+  static const direction = '/conversation_list';
   const ConversationListScreen({Key? key}) : super(key: key);
 
   @override

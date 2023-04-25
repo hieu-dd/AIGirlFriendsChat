@@ -7,6 +7,7 @@ import '../../domain/user/model/user.dart';
 import '../chat/chat.dart';
 
 class GirlFriendListScreen extends ConsumerStatefulWidget {
+  static const direction = '/girl_friend_list';
   const GirlFriendListScreen({Key? key}) : super(key: key);
 
   @override
