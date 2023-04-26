@@ -5,6 +5,18 @@ class User extends Equatable {
   final String name;
   final int age;
   final Gender gender;
+  String bio = "";
+  String profileBio = "";
+  List<String> profileInterests = [];
+  String chatAvatar = "";
+  String largeBody = "";
+  String largeBodyBlurCutOff = "";
+  String largeBackground = "";
+  String gifAvatar = "";
+  String job = "";
+  int mainColor = 0xFFFFFFFF;
+  int backgroundColor = 0xFFFFFFFF;
+
   bool isMe;
   late int createdAt;
   late int updatedAt;
@@ -15,41 +27,21 @@ class User extends Equatable {
     required this.age,
     required this.gender,
     this.isMe = false,
+    this.bio = "",
+    this.profileBio = "",
+    this.chatAvatar = "",
+    this.largeBody = "",
+    this.largeBodyBlurCutOff = "",
+    this.largeBackground = "",
+    this.gifAvatar = "",
+    this.job = "",
+    this.profileInterests = const [],
+    this.mainColor = 0xFFFFFFFF,
+    this.backgroundColor = 0xFFFFFFFF,
   }) {
     createdAt = DateTime.now().microsecondsSinceEpoch;
     updatedAt = DateTime.now().microsecondsSinceEpoch;
   }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'age': age,
-      'gender': gender.index,
-      'createdAt': createdAt,
-      'updatedAt': updatedAt,
-      'isMe': isMe ? 1 : 0,
-    };
-  }
-
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'],
-      name: json['name'],
-      age: json['age'],
-      gender: Gender.values[json['gender']],
-      isMe: json['isMe'] == 1,
-    )
-      ..createdAt = json['createdAt'] ?? DateTime.now().microsecondsSinceEpoch
-      ..updatedAt = json['updatedAt'] ?? DateTime.now().microsecondsSinceEpoch;
-  }
-
-  factory User.fromId(String id) => User(
-        id: id,
-        name: '',
-        age: 0,
-        gender: Gender.other,
-      );
 
   @override
   List<Object?> get props => [

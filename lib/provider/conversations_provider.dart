@@ -42,6 +42,10 @@ class ConversationsNotifier extends ChangeNotifier {
     await Future.wait(ids);
     getAllConversations();
   }
+
+  Future<int?> getConversationByUser(User user) async {
+    return await conversationRepository.getConversationByUser(user);
+  }
 }
 
 final conversationsProvider =

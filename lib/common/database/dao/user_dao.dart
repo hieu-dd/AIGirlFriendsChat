@@ -1,6 +1,8 @@
 import 'package:ai_girl_friends/common/database/database_helper.dart';
-import 'package:ai_girl_friends/domain/user/model/user.dart';
+import 'package:ai_girl_friends/data/user/model/local/local_user.dart';
 import 'package:sqflite/sqflite.dart';
+
+import '../../../domain/user/model/user.dart';
 
 class UserDao {
   final DatabaseHelper databaseHelper = DatabaseHelper.instance;
@@ -11,7 +13,7 @@ class UserDao {
       return await txn.insert(
         databaseHelper.userTable,
         {
-          ...user.toJson(),
+          ...LocalUser.fromDomain(user).toDbJson(),
           'updatedAt': DateTime.now().microsecondsSinceEpoch,
         },
         conflictAlgorithm: ConflictAlgorithm.replace,
@@ -28,7 +30,7 @@ class UserDao {
         whereArgs: [userId],
       );
     });
-    return User.fromJson(result.first);
+    return LocalUser.fromJson(result.first).toDomainUser();
   }
 
   Future<User> findMe() async {
@@ -38,6 +40,6 @@ class UserDao {
       where: '${databaseHelper.colUserIsMe}=?',
       whereArgs: [1],
     );
-    return User.fromJson(result.first);
+    return LocalUser.fromJson(result.first).toDomainUser();
   }
 }

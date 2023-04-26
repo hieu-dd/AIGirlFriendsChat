@@ -48,6 +48,11 @@ class ConversationRepositoryImpl implements ConversationRepository {
         : null;
   }
 
+  @override
+  Future<int?> getConversationByUser(User user) async {
+    return (await conversationDao.getConversationByUser(user.id))?.id;
+  }
+
   Future<Conversation> _getConversationFromLocal(
       LocalConversation local) async {
     final conversationId = local.id!;

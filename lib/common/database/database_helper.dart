@@ -35,6 +35,17 @@ class DatabaseHelper {
   String colUserAge = 'age';
   String colUserGender = 'gender';
   String colUserIsMe = 'isMe';
+  String colUserBio = 'bio';
+  String colUserProfileBio = "profileBio";
+  String colUserProfileInterests = "profileInterests";
+  String colUserChatAvatar = "chatAvatar";
+  String colUserLargeBody = "largeBody";
+  String colUserLargeBodyBlurCutOff = "largeBodyBlurCutOff";
+  String colUserLargeBackground = "largeBackground";
+  String colUserGifAvatar = "gifAvatar";
+  String colUserJob = "job";
+  String colUserMainColor = "mainColor";
+  String colUserBackgroundColor = "backgroundColor";
 
   // Participant table
   String colParticipantUserId = 'userId';
@@ -62,7 +73,7 @@ class DatabaseHelper {
     await db.execute(
         'CREATE TABLE $messageTable($colMessageId INTEGER PRIMARY KEY AUTOINCREMENT, $colMessageConversationId INTEGER NOT NULL, $colMessageSender TEXT NOT NULL, $colMessageMessage TEXT NOT NULL, $colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL, FOREIGN KEY($colMessageConversationId) REFERENCES $conversationTable($colConversationId))');
     await db.execute(
-        'CREATE TABLE $userTable($colUserId TEXT PRIMARY KEY, $colUserName TEXT NOT NULL ,$colUserAge INTEGER NOT NULL, $colUserGender INTEGER NOT NULL, $colUserIsMe INTEGER NOT NULL ,$colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL)');
+        'CREATE TABLE $userTable($colUserId TEXT PRIMARY KEY, $colUserName TEXT NOT NULL ,$colUserAge INTEGER NOT NULL, $colUserGender INTEGER NOT NULL, $colUserIsMe INTEGER NOT NULL ,$colUserBio TEXT NOT NULL, $colUserProfileBio TEXT NOT NULL, $colUserProfileInterests TEXT NOT NULL, $colUserChatAvatar TEXT NOT NULL, $colUserLargeBody TEXT NOT NULL, $colUserLargeBodyBlurCutOff TEXT NOT NULL, $colUserLargeBackground TEXT NOT NULL,  $colUserGifAvatar TEXT NOT NULL, $colUserJob TEXT NOT NULL, $colUserMainColor INTEGER NOT NULL, $colUserBackgroundColor INTEGER NOT NULL, $colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL)');
     await db.execute(
         'CREATE TABLE $participantTable($colParticipantUserId TEXT NOT NULL, $colParticipantConversationId INTEGER NOT NULL, $colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL, PRIMARY KEY ($colParticipantUserId, $colParticipantConversationId),FOREIGN KEY($colParticipantUserId) REFERENCES $userTable($colUserId), FOREIGN KEY($colParticipantConversationId) REFERENCES $conversationTable($colConversationId))');
   }

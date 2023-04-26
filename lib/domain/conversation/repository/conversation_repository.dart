@@ -7,6 +7,8 @@ abstract class ConversationRepository {
 
   Future<Conversation?> getConversationById(int conversationId);
 
+  Future<int?> getConversationByUser(User user);
+
   Future<int> insertConversation(Conversation conversation);
 
   Stream<int> sendMessage(int conversationId, String message);
