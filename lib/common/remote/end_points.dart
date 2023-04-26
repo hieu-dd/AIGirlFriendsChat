@@ -10,5 +10,5 @@ class Endpoints {
   // connectTimeout
   static const Duration connectionTimeout = Duration(seconds: 30);
 
-  static const String chat = '/v1/chat/completions	';
+  static const String chat = '/v1/chat/completions';
 }

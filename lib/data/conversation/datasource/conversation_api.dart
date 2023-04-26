@@ -2,6 +2,7 @@ import 'package:ai_girl_friends/common/remote/dio_client.dart';
 import 'package:ai_girl_friends/common/remote/end_points.dart';
 import 'package:ai_girl_friends/data/conversation/model/remote/remote_message.dart';
 import 'package:ai_girl_friends/data/conversation/model/remote/send_turbo_messages.dart';
+import 'package:dio/dio.dart';
 
 class ConversationApi {
   final DioClient dioClient;
@@ -11,9 +12,15 @@ class ConversationApi {
   Future<RemoteMessage> sendMessage(
     SendTurboMessagesRequest request,
   ) async {
+    final data = request.toJson();
     final response = (await dioClient.post(
       Endpoints.chat,
-      data: request.toJson(),
+      data: data,
+      options: Options(headers: {
+        "Content-Type": "application/json",
+        "Authorization":
+            "Bearer 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",
+      }),
     ))
         .data;
     return RemoteMessage(

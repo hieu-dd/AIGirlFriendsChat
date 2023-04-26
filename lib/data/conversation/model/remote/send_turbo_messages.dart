@@ -11,6 +11,6 @@ class SendTurboMessagesRequest {
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'model': model,
-        'messages': messages.map((e) => e.toJson())
+        'messages': messages.map((m) => m.toJson()).toList()
       };
 }

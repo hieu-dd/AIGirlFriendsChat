@@ -1,7 +1,6 @@
 import 'package:ai_girl_friends/provider/conversation_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uuid/uuid.dart';
 
 class ChatScreen extends ConsumerStatefulWidget {
   static const direction = 'chat';
@@ -27,6 +26,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final messageController = TextEditingController();
     final conversation = ref.watch(conversationProvider).conversation;
     return Scaffold(
       body: conversation != null
@@ -40,14 +40,28 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                         return Text(conversation.messages[index].message);
                       }),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 100,
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      ref.read(conversationProvider).sendMessage(Uuid().v4());
-                    },
-                    child: Text("Add message"))
+                SizedBox(
+                  height: 50,
+                  width: 400,
+                  child: Row(
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            ref
+                                .read(conversationProvider)
+                                .sendMessage(messageController.text);
+                          },
+                          child: Text("send")),
+                      Expanded(
+                          child: TextField(
+                        controller: messageController,
+                      )),
+                    ],
+                  ),
+                )
               ],
             )
           : const Center(

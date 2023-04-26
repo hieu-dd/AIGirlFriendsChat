@@ -5,6 +5,8 @@ import 'package:ai_girl_friends/common/database/dao/user_dao.dart';
 import 'package:ai_girl_friends/data/conversation/model/local/local_conversation.dart';
 import 'package:ai_girl_friends/data/conversation/model/local/local_message.dart';
 import 'package:ai_girl_friends/data/conversation/model/local/local_participant.dart';
+import 'package:ai_girl_friends/data/conversation/model/remote/remote_message.dart';
+import 'package:ai_girl_friends/data/conversation/model/remote/send_turbo_messages.dart';
 import 'package:ai_girl_friends/domain/conversation/model/conversation.dart';
 import 'package:ai_girl_friends/domain/conversation/model/message.dart';
 
@@ -99,15 +101,16 @@ class ConversationRepositoryImpl implements ConversationRepository {
       final me = await userDao.findMe();
       final mes =
           Message(conversationId: conversationId, message: message, sender: me);
-
-      final newConversation = Conversation(
-          id: conversation.id,
-          type: conversation.type,
-          creator: conversation.creator,
-          participants: [...conversation.participants, me],
-          messages: [mes, ...conversation.messages])
-        ..createdAt = conversation.createdAt;
-      yield await insertConversation(newConversation);
+      yield await _insertMessageToConversation(mes, conversation);
+      final response = await conversationApi.sendMessage(
+          SendTurboMessagesRequest(
+              messages: [RemoteMessage(role: 'user', content: message)]));
+      final responseMes = Message(
+          conversationId: conversationId,
+          message: response.content,
+          sender: conversation.participants
+              .firstWhere((participant) => participant.isMe));
+      yield await _insertMessageToConversation(responseMes, conversation);
     }
   }
 
@@ -142,5 +145,17 @@ class ConversationRepositoryImpl implements ConversationRepository {
 
   Future<User> _getUserFromParticipant(LocalParticipant participant) async {
     return await userDao.getUserById(participant.userId);
+  }
+
+  Future<int> _insertMessageToConversation(
+      Message message, Conversation conversation) async {
+    final newConversation = Conversation(
+        id: conversation.id,
+        type: conversation.type,
+        creator: conversation.creator,
+        participants: [...conversation.participants, message.sender],
+        messages: [message, ...conversation.messages])
+      ..createdAt = conversation.createdAt;
+    return await insertConversation(newConversation);
   }
 }
