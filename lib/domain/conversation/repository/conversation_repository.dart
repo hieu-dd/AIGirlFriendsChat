@@ -9,7 +9,7 @@ abstract class ConversationRepository {
 
   Future<int> insertConversation(Conversation conversation);
 
-  Future<int> sendMessage(int conversationId, String message);
+  Stream<int> sendMessage(int conversationId, String message);
 
   Future<int> createSingleConversation(User user);
 }

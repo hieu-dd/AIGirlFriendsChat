@@ -32,7 +32,14 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       body: conversation != null
           ? Column(
               children: [
-                ...conversation.messages.map((e) => Text(e.message)).toList(),
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: conversation.messages.length,
+                      reverse: true,
+                      itemBuilder: (context, index) {
+                        return Text(conversation.messages[index].message);
+                      }),
+                ),
                 SizedBox(
                   height: 100,
                 ),

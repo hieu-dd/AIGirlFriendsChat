@@ -10,18 +10,21 @@ import 'package:ai_girl_friends/domain/conversation/model/message.dart';
 
 import '../../../domain/conversation/repository/conversation_repository.dart';
 import '../../../domain/user/model/user.dart';
+import '../datasource/conversation_api.dart';
 
 class ConversationRepositoryImpl implements ConversationRepository {
   final ConversationDao conversationDao;
   final ParticipantDao participantDao;
   final MessageDao messageDao;
   final UserDao userDao;
+  final ConversationApi conversationApi;
 
   ConversationRepositoryImpl({
     required this.conversationDao,
     required this.participantDao,
     required this.messageDao,
     required this.userDao,
+    required this.conversationApi,
   });
 
   @override
@@ -57,7 +60,8 @@ class ConversationRepositoryImpl implements ConversationRepository {
                   local,
                   participants,
                 ))
-            .toList();
+            .toList()
+          ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
     return Conversation(
       id: conversationId,
@@ -87,21 +91,24 @@ class ConversationRepositoryImpl implements ConversationRepository {
   }
 
   @override
-  Future<int> sendMessage(int conversationId, String message) async {
+  Stream<int> sendMessage(int conversationId, String message) async* {
     final conversation = await getConversationById(conversationId);
-    if (conversation == null) return 0;
-    final me = await userDao.findMe();
-    final mes =
-        Message(conversationId: conversationId, message: message, sender: me);
+    if (conversation == null) {
+      yield 0;
+    } else {
+      final me = await userDao.findMe();
+      final mes =
+          Message(conversationId: conversationId, message: message, sender: me);
 
-    final newConversation = Conversation(
-        id: conversation.id,
-        type: conversation.type,
-        creator: conversation.creator,
-        participants: [...conversation.participants, me],
-        messages: [mes, ...conversation.messages])
-      ..createdAt = conversation.createdAt;
-    return await insertConversation(newConversation);
+      final newConversation = Conversation(
+          id: conversation.id,
+          type: conversation.type,
+          creator: conversation.creator,
+          participants: [...conversation.participants, me],
+          messages: [mes, ...conversation.messages])
+        ..createdAt = conversation.createdAt;
+      yield await insertConversation(newConversation);
+    }
   }
 
   @override

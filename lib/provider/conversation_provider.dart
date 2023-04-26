@@ -31,11 +31,13 @@ class ConversationNotifier extends ChangeNotifier {
   }
 
   void sendMessage(String message) async {
-    final result =
-        await conversationRepository.sendMessage(_conversationId!, message);
-    if (result != 0) {
-      getLocalConversation(_conversationId!);
-    }
+    conversationRepository
+        .sendMessage(_conversationId!, message)
+        .listen((messageId) {
+      if (messageId != 0) {
+        getLocalConversation(_conversationId!);
+      }
+    });
   }
 }
 
