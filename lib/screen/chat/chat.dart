@@ -29,44 +29,46 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     final messageController = TextEditingController();
     final conversation = ref.watch(conversationProvider).conversation;
     return Scaffold(
-      body: conversation != null
-          ? Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                      itemCount: conversation.messages.length,
-                      reverse: true,
-                      itemBuilder: (context, index) {
-                        return Text(conversation.messages[index].message);
-                      }),
-                ),
-                const SizedBox(
-                  height: 100,
-                ),
-                SizedBox(
-                  height: 50,
-                  width: 400,
-                  child: Row(
-                    children: [
-                      ElevatedButton(
-                          onPressed: () {
-                            ref
-                                .read(conversationProvider)
-                                .sendMessage(messageController.text);
-                          },
-                          child: Text("send")),
-                      Expanded(
-                          child: TextField(
-                        controller: messageController,
-                      )),
-                    ],
+      body: SafeArea(
+        child: conversation != null
+            ? Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: conversation.messages.length,
+                        reverse: true,
+                        itemBuilder: (context, index) {
+                          return Text(conversation.messages[index].message);
+                        }),
                   ),
-                )
-              ],
-            )
-          : const Center(
-              child: Text("Error"),
-            ),
+                  const SizedBox(
+                    height: 100,
+                  ),
+                  SizedBox(
+                    height: 50,
+                    width: 400,
+                    child: Row(
+                      children: [
+                        ElevatedButton(
+                            onPressed: () {
+                              ref
+                                  .read(conversationProvider)
+                                  .sendMessage(messageController.text);
+                            },
+                            child: Text("send")),
+                        Expanded(
+                            child: TextField(
+                          controller: messageController,
+                        )),
+                      ],
+                    ),
+                  )
+                ],
+              )
+            : const Center(
+                child: Text("Error"),
+              ),
+      ),
     );
   }
 }

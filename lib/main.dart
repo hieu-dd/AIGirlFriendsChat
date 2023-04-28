@@ -1,4 +1,6 @@
 import 'package:ai_girl_friends/screen/routes/app_routes.dart';
+import 'package:ai_girl_friends/theme/color.dart';
+import 'package:ai_girl_friends/theme/typography.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,7 +27,9 @@ class MyApp extends ConsumerWidget {
     return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
+        colorScheme: colorScheme,
+        typography: typography,
       ),
       routerConfig: router,
     );

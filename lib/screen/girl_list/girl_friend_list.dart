@@ -39,26 +39,29 @@ class _GirlFriendListScreenState extends ConsumerState<GirlFriendListScreen> {
       );
     }
 
-    final user = users[0];
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: Column(
           children: [
             const SizedBox(
               height: 20,
             ),
-            const Text("App name"),
+            const Text(
+              "App name",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+            ),
             const SizedBox(
               height: 10,
             ),
             Expanded(
               child: PageView(
-                children: users.mapTo((user) => _userProfileItem(
-                    user: user,
-                    onClick: () {
-                      _goToChat(user, context);
-                    })),
+                children: users.mapTo((user) => _userProfileItem(user,
+                    context: context, gotoChat: _goToChat)),
               ),
+            ),
+            SizedBox(
+              height: 45,
             )
           ],
         ),
@@ -67,10 +70,14 @@ class _GirlFriendListScreenState extends ConsumerState<GirlFriendListScreen> {
   }
 }
 
-Widget _userProfileItem({
-  required User user,
-  Function? onClick,
+Widget _userProfileItem(
+  User user, {
+  Function? gotoChat,
+  Function? gotoProfile,
+  required BuildContext context,
 }) {
+  final typography = Theme.of(context).typography;
+  final colorScheme = Theme.of(context).colorScheme;
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 5),
     child: SizedBox(
@@ -106,9 +113,56 @@ Widget _userProfileItem({
               children: [
                 Text(
                   user.name,
-                  style: TextStyle(color: Colors.white),
+                  textScaleFactor: 1.0,
+                  textAlign: TextAlign.justify,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 40,
+                    inherit: false,
+                  ),
                 ),
-                Text(user.job),
+                Text(
+                  user.job,
+                  style: const TextStyle(
+                      fontSize: 12,
+                      inherit: false,
+                      fontWeight: FontWeight.normal),
+                ),
+                Text(
+                  user.profileBio,
+                  style: const TextStyle(
+                      fontSize: 12,
+                      inherit: false,
+                      fontWeight: FontWeight.normal),
+                ),
+                const SizedBox(height: 45),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          gotoProfile?.call(user, context);
+                        },
+                        icon: const Icon(
+                          Icons.account_box_outlined,
+                          size: 36,
+                        )),
+                    Container(
+                      width: 2,
+                      height: 24,
+                      color: colorScheme.onBackground,
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          gotoChat?.call(user, context);
+                        },
+                        icon: const Icon(
+                          Icons.chat_bubble_outline,
+                          size: 36,
+                        )),
+                  ],
+                ),
+                const SizedBox(height: 18)
               ],
             ),
           )
