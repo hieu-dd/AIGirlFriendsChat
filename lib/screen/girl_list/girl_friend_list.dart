@@ -1,3 +1,4 @@
+import 'package:ai_girl_friends/ext/Collection.dart';
 import 'package:ai_girl_friends/provider/conversations_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,26 +39,83 @@ class _GirlFriendListScreenState extends ConsumerState<GirlFriendListScreen> {
       );
     }
 
+    final user = users[0];
     return SafeArea(
-        child: Scaffold(
-      body: Column(
-        children: users
-            .map((user) => InkWell(
-                  onTap: () {
-                    _goToChat(user, context);
-                  },
-                  child: ListTile(
-                    title: Text(
-                      user.name,
-                      style: TextStyle(color: Color(user.mainColor)),
-                    ),
-                    subtitle: Text(user.bio),
-                  ),
-                ))
-            .toList(),
+      child: Scaffold(
+        body: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            const Text("App name"),
+            const SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              child: PageView(
+                children: users.mapTo((user) => _userProfileItem(
+                    user: user,
+                    onClick: () {
+                      _goToChat(user, context);
+                    })),
+              ),
+            )
+          ],
+        ),
       ),
-    ));
+    );
   }
+}
+
+Widget _userProfileItem({
+  required User user,
+  Function? onClick,
+}) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 5),
+    child: SizedBox(
+      height: double.infinity,
+      child: Stack(
+        alignment: AlignmentDirectional.bottomStart,
+        children: [
+          FractionallySizedBox(
+            heightFactor: 1,
+            child: Image.asset(
+              user.largeBody,
+              fit: BoxFit.fitHeight,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+              child: FractionallySizedBox(
+                heightFactor: 0.95,
+                child: Image.asset(
+                  user.largeBodyBlurCutOff,
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 50),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  user.name,
+                  style: TextStyle(color: Colors.white),
+                ),
+                Text(user.job),
+              ],
+            ),
+          )
+        ],
+      ),
+    ),
+  );
 }
 
 List<User> users = [
@@ -79,6 +137,8 @@ List<User> users = [
     ],
     mainColor: 0xFFB12929,
     backgroundColor: 0xFF25080B,
+    largeBody: 'assets/images/trist.png',
+    largeBodyBlurCutOff: 'assets/images/trist_bg.png',
   ),
   User(
     id: '1',
@@ -97,5 +157,7 @@ List<User> users = [
     ],
     mainColor: 0xFFF48FB1,
     backgroundColor: 0xFF32203A,
+    largeBody: 'assets/images/yen.png',
+    largeBodyBlurCutOff: 'assets/images/yen_bg.png',
   ),
 ];
