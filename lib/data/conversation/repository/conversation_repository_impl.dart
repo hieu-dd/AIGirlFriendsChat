@@ -107,15 +107,24 @@ class ConversationRepositoryImpl implements ConversationRepository {
       final mes =
           Message(conversationId: conversationId, message: message, sender: me);
       yield await _insertMessageToConversation(mes, conversation);
-      final response = await conversationApi.sendMessage(
-          SendTurboMessagesRequest(
-              messages: [RemoteMessage(role: 'user', content: message)]));
-      final responseMes = Message(
-          conversationId: conversationId,
-          message: response.content,
-          sender: conversation.participants
-              .firstWhere((participant) => participant.isMe));
-      yield await _insertMessageToConversation(responseMes, conversation);
+      try {
+        final response = await conversationApi.sendMessage(
+            SendTurboMessagesRequest(
+                messages: [RemoteMessage(role: 'user', content: message)]));
+        final responseMes = Message(
+            conversationId: conversationId,
+            message: response.content,
+            sender: conversation.participants
+                .firstWhere((participant) => !participant.isMe));
+        yield await _insertMessageToConversation(responseMes, conversation);
+      } catch (e) {
+        final responseMes = Message(
+            conversationId: conversationId,
+            message: "Tôi không thể trả lời lúc này",
+            sender: conversation.participants
+                .firstWhere((participant) => !participant.isMe));
+        yield await _insertMessageToConversation(responseMes, conversation);
+      }
     }
   }
 
