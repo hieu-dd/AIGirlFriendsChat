@@ -67,6 +67,7 @@ flutter:
   assets:
     - assets/images/yen.png
     - assets/images/yen_bg.png
+    - assets/images/yen_large_bg.png
     - assets/images/trist.png
     - assets/images/trist_bg.png
 

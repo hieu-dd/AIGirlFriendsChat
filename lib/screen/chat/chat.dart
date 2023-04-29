@@ -1,4 +1,4 @@
-import 'package:ai_girl_friends/ext/StringExt.dart';
+import 'package:ai_girl_friends/ext/string_ext.dart';
 import 'package:ai_girl_friends/provider/conversation_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -76,8 +76,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     ),
                     Text(
                       partner.name,
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 30, fontWeight: FontWeight.bold),
                     )
                   ],
                 )
