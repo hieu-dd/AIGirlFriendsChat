@@ -39,7 +39,17 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
-          leading: Icon(Icons.chevron_left),
+          toolbarHeight: 80,
+          backgroundColor: Theme.of(context).colorScheme.background,
+          leading: const Icon(Icons.chevron_left),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(1),
+            child: Divider(
+              color: Theme.of(context).colorScheme.onBackground,
+              thickness: 1,
+            ),
+          ),
+          elevation: 0,
           centerTitle: true,
           title: partner != null
               ? Row(
@@ -49,7 +59,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                       width: 43,
                       height: 43,
                       child: Container(
-                        padding: EdgeInsets.all(2),
+                        padding: const EdgeInsets.all(2),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(43),
                             border: Border.all(width: 2, color: Colors.blue)),
@@ -61,7 +71,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 16,
                     ),
                     Text(
