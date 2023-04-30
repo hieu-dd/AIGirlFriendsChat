@@ -2,6 +2,7 @@ import 'package:ai_girl_friends/ext/list_ext.dart';
 import 'package:ai_girl_friends/provider/girl_firends_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../domain/user/model/user.dart';
 
@@ -27,56 +28,36 @@ class GirlProfileScreen extends ConsumerWidget {
         ? SafeArea(
             child: Scaffold(
               backgroundColor: backgroundColor,
-              body: SingleChildScrollView(
-                child: Container(
-                  child: Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      Image.asset(
-                        'assets/images/yen_large_bg.png',
-                        fit: BoxFit.fitWidth,
+              body: Stack(
+                children: [
+                  SingleChildScrollView(
+                    child: Container(
+                      child: Stack(
+                        alignment: Alignment.topCenter,
+                        children: [
+                          ..._buildBackground(user, screenWidth),
+                          SizedBox(
+                            width: screenWidth,
+                            child: _buildUserProfile(user, context),
+                          ),
+                        ],
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 20),
-                        height: screenWidth * 1.3,
-                        child: Image.asset(
-                          user.largeBody,
-                          fit: BoxFit.fitHeight,
-                        ),
-                      ),
-                      Positioned(
-                        top: screenWidth,
-                        height: 75,
-                        width: screenWidth,
-                        child: Container(
-                          width: screenWidth,
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                            colors: [
-                              backgroundColor,
-                              Colors.transparent,
-                            ],
-                          )),
-                        ),
-                      ),
-                      Positioned(
-                        top: screenWidth + 75,
-                        height: screenWidth,
-                        width: screenWidth,
-                        child: Container(
-                          width: screenWidth,
-                          color: backgroundColor,
-                        ),
-                      ),
-                      SizedBox(
-                        width: screenWidth,
-                        child: _buildUserProfile(user, context),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            context.pop();
+                          },
+                          child: Icon(Icons.chevron_left),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           )
@@ -86,14 +67,9 @@ class GirlProfileScreen extends ConsumerWidget {
   List<Widget> _buildBackground(User user, double screenWidth) {
     final backgroundColor = Color(user.backgroundColor);
     return [
-      Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Image.asset(
-            'assets/images/yen_large_bg.png',
-            fit: BoxFit.fitWidth,
-          ),
-        ],
+      Image.asset(
+        'assets/images/yen_large_bg.png',
+        fit: BoxFit.fitWidth,
       ),
       Container(
         margin: const EdgeInsets.only(top: 20),
@@ -103,29 +79,32 @@ class GirlProfileScreen extends ConsumerWidget {
           fit: BoxFit.fitHeight,
         ),
       ),
-      Padding(
-          padding: EdgeInsets.only(top: screenWidth),
-          child: Column(
-            children: [
-              Container(
-                height: 75,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [
-                    Color(user.backgroundColor),
-                    Colors.transparent,
-                  ],
-                )),
-              ),
-              Expanded(
-                child: Container(
-                  color: backgroundColor,
-                ),
-              )
+      Positioned(
+        top: screenWidth,
+        height: 75,
+        width: screenWidth,
+        child: Container(
+          width: screenWidth,
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+            colors: [
+              backgroundColor,
+              Colors.transparent,
             ],
           )),
+        ),
+      ),
+      Positioned(
+        top: screenWidth + 75,
+        height: screenWidth,
+        width: screenWidth,
+        child: Container(
+          width: screenWidth,
+          color: backgroundColor,
+        ),
+      ),
     ];
   }
 
