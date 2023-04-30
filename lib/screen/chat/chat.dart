@@ -2,6 +2,7 @@ import 'package:ai_girl_friends/ext/string_ext.dart';
 import 'package:ai_girl_friends/provider/conversation_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../domain/conversation/model/message.dart';
 
@@ -41,7 +42,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         appBar: AppBar(
           toolbarHeight: 80,
           backgroundColor: Theme.of(context).colorScheme.background,
-          leading: const Icon(Icons.chevron_left),
+          leading: InkWell(
+              onTap: () {
+                context.pop();
+              },
+              child: const Icon(Icons.chevron_left)),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(1),
             child: Divider(
