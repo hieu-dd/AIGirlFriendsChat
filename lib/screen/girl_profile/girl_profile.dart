@@ -45,14 +45,14 @@ class GirlProfileScreen extends ConsumerWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     child: Row(
                       children: [
                         InkWell(
                           onTap: () {
                             context.pop();
                           },
-                          child: Icon(Icons.chevron_left),
+                          child: const Icon(Icons.chevron_left),
                         ),
                       ],
                     ),
@@ -141,12 +141,12 @@ class GirlProfileScreen extends ConsumerWidget {
         ),
         _buildUserHobbies(user.profileInterests.sublist(2, 4), context),
         Container(
-          margin: EdgeInsets.only(top: 35, left: 75, right: 75),
+          margin: const EdgeInsets.only(top: 35, left: 75, right: 75),
           alignment: Alignment.center,
           height: 58,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
-            color: Color(0xFFce0011),
+            color: const Color(0xFFce0011),
           ),
           child: Stack(
             children: [
@@ -161,7 +161,7 @@ class GirlProfileScreen extends ConsumerWidget {
                     ..color = Colors.white,
                 ),
               ),
-              Text(
+              const Text(
                 'Chat me up',
                 style: TextStyle(
                   fontSize: 28,
@@ -172,15 +172,38 @@ class GirlProfileScreen extends ConsumerWidget {
             ],
           ),
         ),
-        RotatedBox(
-          quarterTurns: 3,
-          child: Text(
-            'Hello, world!',
-            style: TextStyle(
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
+        const SizedBox(
+          height: 34,
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 30,
             ),
-          ),
+            RotatedBox(
+              quarterTurns: 3,
+              child: Text(
+                'About me'.toUpperCase(),
+                style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                    color: Color(user.mainColor)),
+              ),
+            ),
+            SizedBox(
+              width: 16,
+            ),
+            Expanded(
+                child: Text(
+              user.profileBio,
+              textAlign: TextAlign.justify,
+              style: TextStyle(fontSize: 14, height: 2),
+            )),
+            const SizedBox(
+              width: 30,
+            )
+          ],
         )
       ],
     );
