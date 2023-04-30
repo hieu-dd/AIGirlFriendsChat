@@ -17,6 +17,8 @@ class GirlProfileScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     final user = ref
         .watch(girlFriendsProvider)
         .girlFriends
@@ -26,31 +28,34 @@ class GirlProfileScreen extends ConsumerWidget {
         ? SafeArea(
             child: Scaffold(
               backgroundColor: backgroundColor,
-              body: Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  ..._buildBackground(user, screenWidth),
-                  Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            context.pop();
-                          },
-                          child: const Icon(
-                            Icons.chevron_left,
-                            size: 32,
-                          ),
-                        )
-                      ],
+              body: SizedBox(
+                height: screenHeight,
+                child: Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    ..._buildBackground(user, screenWidth),
+                    Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              context.pop();
+                            },
+                            child: const Icon(
+                              Icons.chevron_left,
+                              size: 32,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: screenWidth * 1.1),
-                    child: _buildUserProfile(user, context),
-                  )
-                ],
+                    Padding(
+                      padding: EdgeInsets.only(top: screenWidth * 1.1),
+                      child: _buildUserProfile(user, context),
+                    )
+                  ],
+                ),
               ),
             ),
           )
@@ -130,6 +135,48 @@ class GirlProfileScreen extends ConsumerWidget {
           height: 15,
         ),
         _buildUserHobbies(user.profileInterests.sublist(2, 4), context),
+        Container(
+          margin: EdgeInsets.only(top: 35, left: 75, right: 75),
+          alignment: Alignment.center,
+          height: 58,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            color: Color(0xFFce0011),
+          ),
+          child: Stack(
+            children: [
+              Text(
+                'Chat me up',
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  foreground: Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 4
+                    ..color = Colors.white,
+                ),
+              ),
+              Text(
+                'Chat me up',
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFFce0011),
+                ),
+              ),
+            ],
+          ),
+        ),
+        RotatedBox(
+          quarterTurns: 3,
+          child: Text(
+            'Hello, world!',
+            style: TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        )
       ],
     );
   }
