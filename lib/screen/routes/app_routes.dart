@@ -6,6 +6,8 @@ import 'package:ai_girl_friends/screen/login/login.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../register/register.dart';
+
 final routerProvider = Provider<GoRouter>((ref) {
   final isLoggedIn = ref.watch(authProvider).me != null;
   return GoRouter(
@@ -14,7 +16,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/',
         redirect: (context, state) {
           if (!isLoggedIn) {
-            return LoginScreen.direction;
+            return RegisterScreen.direction;
           }
           return HomeScreen.direction;
         },
@@ -22,6 +24,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: LoginScreen.direction,
         builder: (context, state) => LoginScreen(),
+      ),
+      GoRoute(
+        path: RegisterScreen.direction,
+        builder: (context, state) => RegisterScreen(),
       ),
       GoRoute(
           path: HomeScreen.direction,
