@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../ext/time.dart';
+import '../../provider/auth_provider.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   static const direction = '/register';
@@ -26,6 +27,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   int currentStep = 0;
 
   void onContinue(BuildContext context) {
+    final age = getAgeFromBirthday(
+        '${_dayController.text}/${_monthController.text}/${_yearController.text}');
     if (currentStep < 3) {
       setState(() {
         currentStep++;
@@ -36,11 +39,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       setState(() {
         currentStep = 0;
       });
-    } else if (!validTime(
-      _dayController.text,
-      _monthController.text,
-      _yearController.text,
-    )) {
+    } else if (age == null || age <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Pls enter valid birthday")));
       setState(() {
@@ -50,7 +49,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Pls enter your job")));
     } else {
-      
+      ref.read(authProvider.notifier).loginWithUser(
+            name: _nameController.text,
+            age: age,
+            genderValue: _selectedGender.name,
+            job: _jobController.text,
+          );
     }
   }
 
