@@ -73,6 +73,8 @@ flutter:
     - assets/images/crown.png
     - assets/images/setting.png
     - assets/images/heart.png
+    - assets/images/chat_arrow_one.png
+    - assets/images/chat_arrow_two.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

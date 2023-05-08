@@ -216,23 +216,38 @@ class MessageList extends StatelessWidget {
               ),
             ),
           Flexible(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: const Radius.circular(10),
-                  topRight: const Radius.circular(10),
-                  bottomRight: isMe ? Radius.zero : const Radius.circular(10),
-                  bottomLeft: isMe ? const Radius.circular(10) : Radius.zero,
+            child: Stack(
+              alignment: isMe ? Alignment.bottomRight : Alignment.bottomLeft,
+              children: [
+                isMe
+                    ? Image.asset(
+                        'assets/images/chat_arrow_one.png',
+                      )
+                    : Image.asset('assets/images/chat_arrow_two.png'),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: const Radius.circular(10),
+                      topRight: const Radius.circular(10),
+                      bottomRight:
+                          isMe ? Radius.zero : const Radius.circular(10),
+                      bottomLeft:
+                          isMe ? const Radius.circular(10) : Radius.zero,
+                    ),
+                    color: isMe
+                        ? Color(0xFF343434)
+                        : Color(message.sender.mainColor),
+                  ),
+                  margin: EdgeInsets.only(
+                      left: isMe ? 100 : 6, right: isMe ? 6 : 100),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  child: Text(
+                    message.message,
+                    maxLines: 100,
+                  ),
                 ),
-                color: isMe ? Colors.grey : Color(message.sender.mainColor),
-              ),
-              margin:
-                  EdgeInsets.only(left: isMe ? 100 : 10, right: isMe ? 0 : 100),
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-              child: Text(
-                message.message,
-                maxLines: 100,
-              ),
+              ],
             ),
           ),
         ],
