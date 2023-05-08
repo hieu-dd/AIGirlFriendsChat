@@ -217,17 +217,23 @@ class MessageList extends StatelessWidget {
             ),
           Flexible(
             child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: isMe ? Colors.grey : Color(message.sender.mainColor),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(10),
+                  topRight: const Radius.circular(10),
+                  bottomRight: isMe ? Radius.zero : const Radius.circular(10),
+                  bottomLeft: isMe ? const Radius.circular(10) : Radius.zero,
                 ),
-                margin: EdgeInsets.only(
-                    left: isMe ? 100 : 10, right: isMe ? 0 : 100),
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                child: Text(
-                  message.message,
-                  maxLines: 100,
-                )),
+                color: isMe ? Colors.grey : Color(message.sender.mainColor),
+              ),
+              margin:
+                  EdgeInsets.only(left: isMe ? 100 : 10, right: isMe ? 0 : 100),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              child: Text(
+                message.message,
+                maxLines: 100,
+              ),
+            ),
           ),
         ],
       ),

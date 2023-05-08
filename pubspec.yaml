@@ -70,6 +70,9 @@ flutter:
     - assets/images/yen_large_bg.png
     - assets/images/trist.png
     - assets/images/trist_bg.png
+    - assets/images/crown.png
+    - assets/images/setting.png
+    - assets/images/heart.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

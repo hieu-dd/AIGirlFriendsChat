@@ -48,26 +48,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 showSelectedLabels: false,
                 showUnselectedLabels: false,
                 selectedFontSize: 0,
-                items: const <BottomNavigationBarItem>[
+                items: <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.home,
-                      size: 44,
-                    ),
+                    icon: SizedBox(
+                        width: 46,
+                        height: 46,
+                        child: Image.asset('assets/images/crown.png')),
                     label: '',
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.business,
-                      size: 44,
-                    ),
+                    icon: SizedBox(
+                        height: 44,
+                        width: 42,
+                        child: Image.asset('assets/images/heart.png')),
                     label: '',
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.school,
-                      size: 44,
-                    ),
+                    icon: SizedBox(
+                        width: 44,
+                        height: 36,
+                        child: Image.asset('assets/images/setting.png')),
                     label: '',
                   ),
                 ],
