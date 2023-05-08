@@ -223,7 +223,13 @@ class MessageList extends StatelessWidget {
                     ? Image.asset(
                         'assets/images/chat_arrow_one.png',
                       )
-                    : Image.asset('assets/images/chat_arrow_two.png'),
+                    : ColorFiltered(
+                        colorFilter: ColorFilter.mode(
+                            Color(message.sender.mainColor), BlendMode.srcIn),
+                        child: Image.asset(
+                          'assets/images/chat_arrow_two.png',
+                        ),
+                      ),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
