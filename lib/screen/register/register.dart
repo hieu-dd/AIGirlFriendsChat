@@ -6,6 +6,8 @@ import 'package:ai_girl_friends/screen/widget/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../ext/time.dart';
+
 class RegisterScreen extends ConsumerStatefulWidget {
   static const direction = '/register';
 
@@ -23,11 +25,32 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   Gender _selectedGender = Gender.other;
   int currentStep = 0;
 
-  void onContinue() {
+  void onContinue(BuildContext context) {
     if (currentStep < 3) {
       setState(() {
         currentStep++;
       });
+    } else if (_nameController.text.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Pls enter your name")));
+      setState(() {
+        currentStep = 0;
+      });
+    } else if (!validTime(
+      _dayController.text,
+      _monthController.text,
+      _yearController.text,
+    )) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Pls enter valid birthday")));
+      setState(() {
+        currentStep = 2;
+      });
+    } else if (_jobController.text.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Pls enter your job")));
+    } else {
+      
     }
   }
 
@@ -92,7 +115,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             if (currentStep == 3) _step4(),
             const Spacer(),
             InkWell(
-              onTap: onContinue,
+              onTap: () {
+                onContinue(context);
+              },
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 10),

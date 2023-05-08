@@ -79,6 +79,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   name: _nameController.text,
                                   age: int.parse(_ageController.text),
                                   genderValue: _gender!,
+                                  job: "",
                                 );
                           }
                         },

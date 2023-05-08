@@ -32,14 +32,21 @@ class AuthNotifier extends ChangeNotifier {
     });
   }
 
-  void loginWithUser(
-      {required String name,
-      required int age,
-      required String genderValue}) async {
+  void loginWithUser({
+    required String name,
+    required int age,
+    required String genderValue,
+    required String job,
+  }) async {
     final gender =
         Gender.values.firstWhere((element) => element.name == genderValue);
     await repository.loginWithUser(User(
-        id: Uuid().v4(), name: name, age: age, gender: gender, isMe: true));
+        id: Uuid().v4(),
+        name: name,
+        age: age,
+        gender: gender,
+        isMe: true,
+        job: job));
     _findUser();
   }
 }
