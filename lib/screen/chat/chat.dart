@@ -1,5 +1,6 @@
 import 'package:ai_girl_friends/ext/string_ext.dart';
 import 'package:ai_girl_friends/provider/conversation_provider.dart';
+import 'package:ai_girl_friends/screen/widget/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -46,7 +47,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               onTap: () {
                 context.pop();
               },
-              child: const Icon(Icons.chevron_left)),
+              child: IconBack()),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(1),
             child: Divider(
@@ -205,14 +206,12 @@ class MessageList extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           if (!isMe)
-            SizedBox(
-              width: 40,
-              height: 40,
-              child: ClipOval(
-                child: Image.asset(
-                  message.sender.largeBodyBlurCutOff,
-                  fit: BoxFit.cover,
-                ),
+            ClipOval(
+              child: Image.asset(
+                message.sender.largeBodyBlurCutOff,
+                fit: BoxFit.cover,
+                width: 40,
+                height: 40,
               ),
             ),
           Flexible(
@@ -241,7 +240,7 @@ class MessageList extends StatelessWidget {
                           isMe ? const Radius.circular(10) : Radius.zero,
                     ),
                     color: isMe
-                        ? Color(0xFF343434)
+                        ? const Color(0xFF343434)
                         : Color(message.sender.mainColor),
                   ),
                   margin: EdgeInsets.only(
