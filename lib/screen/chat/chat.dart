@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../domain/conversation/model/message.dart';
+import '../widget/app_bar.dart';
 
 class ChatScreen extends ConsumerStatefulWidget {
   static const direction = 'chat';
@@ -40,23 +41,13 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
-        appBar: AppBar(
-          toolbarHeight: 80,
-          backgroundColor: Theme.of(context).colorScheme.background,
+        appBar: commonAppbar(
+          context: context,
           leading: InkWell(
               onTap: () {
                 context.pop();
               },
               child: IconBack()),
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(1),
-            child: Divider(
-              color: Theme.of(context).colorScheme.onBackground,
-              thickness: 1,
-            ),
-          ),
-          elevation: 0,
-          centerTitle: true,
           title: partner != null
               ? Row(
                   mainAxisSize: MainAxisSize.min,

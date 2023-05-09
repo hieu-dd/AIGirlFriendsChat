@@ -1,6 +1,8 @@
-import 'package:ai_girl_friends/screen/conversation_list/conversation_list.dart';
 import 'package:ai_girl_friends/screen/girl_list/girl_friend_list.dart';
+import 'package:ai_girl_friends/screen/premium/premium.dart';
+import 'package:ai_girl_friends/screen/settings/settings.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
   static const direction = '/home';
@@ -12,22 +14,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
+    Center(),
     GirlFriendListScreen(),
-    ConversationListScreen(),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    SettingsScreen(),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  void _onItemTapped(int index, BuildContext context) {
+    if (index != 0) {
+      setState(() {
+        _selectedIndex = index;
+      });
+    } else {
+      context.goNamed(PremiumScreen.direction);
+    }
   }
 
   @override
@@ -73,7 +76,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
                 currentIndex: _selectedIndex,
                 selectedItemColor: Colors.amber[800],
-                onTap: _onItemTapped,
+                onTap: (index) {
+                  _onItemTapped(index, context);
+                },
               ),
             ),
           ),

@@ -3,6 +3,7 @@ import 'package:ai_girl_friends/screen/chat/chat.dart';
 import 'package:ai_girl_friends/screen/girl_profile/girl_profile.dart';
 import 'package:ai_girl_friends/screen/home/home.dart';
 import 'package:ai_girl_friends/screen/login/login.dart';
+import 'package:ai_girl_friends/screen/premium/premium.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -39,6 +40,11 @@ final routerProvider = Provider<GoRouter>((ref) {
               builder: (context, state) => ChatScreen(
                   conversationId:
                       int.parse(state.params[ChatScreen.argConversationId]!)),
+            ),
+            GoRoute(
+              name: PremiumScreen.direction,
+              path: PremiumScreen.direction,
+              builder: (context, state) => const PremiumScreen(),
             ),
             GoRoute(
                 name: GirlProfileScreen.direction,
