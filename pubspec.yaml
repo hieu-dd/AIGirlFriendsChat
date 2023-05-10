@@ -76,6 +76,9 @@ flutter:
     - assets/images/chat_arrow_one.png
     - assets/images/chat_arrow_two.png
     - assets/images/ic_back.png
+    - assets/images/ic_continue.png
+    - assets/images/premium_bg.png
+    - assets/images/infinity.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

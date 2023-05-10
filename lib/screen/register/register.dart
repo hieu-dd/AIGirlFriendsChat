@@ -1,6 +1,7 @@
 import 'package:ai_girl_friends/domain/user/model/user.dart';
 import 'package:ai_girl_friends/ext/list_ext.dart';
 import 'package:ai_girl_friends/ext/string_ext.dart';
+import 'package:ai_girl_friends/screen/widget/button.dart';
 import 'package:ai_girl_friends/screen/widget/icon.dart';
 import 'package:ai_girl_friends/screen/widget/text_field.dart';
 import 'package:flutter/material.dart';
@@ -118,36 +119,21 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             if (currentStep == 2) _step3(),
             if (currentStep == 3) _step4(),
             const Spacer(),
-            InkWell(
-              onTap: () {
+            PrimaryButton(
+              onClick: () {
                 onContinue(context);
               },
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                height: 47,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color(0xFFFFB341),
-                        Color(0xFFFEB441),
-                        Color(0xFFEFCB4D),
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    )),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const SizedBox(
-                      width: 24,
-                    ),
-                    const Text("Continue"),
-                    IconContinue(),
-                  ],
-                ),
+              gradient: const LinearGradient(
+                colors: [
+                  Color(0xFFFFB341),
+                  Color(0xFFFEB441),
+                  Color(0xFFEFCB4D),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
+              trailing: IconContinue(),
+              title: 'Continue',
             ),
           ],
         ),

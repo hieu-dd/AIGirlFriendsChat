@@ -4,10 +4,10 @@ PODS:
   - Firebase/RemoteConfig (10.7.0):
     - Firebase/CoreOnly
     - FirebaseRemoteConfig (~> 10.7.0)
-  - firebase_core (2.10.0):
+  - firebase_core (2.11.0):
     - Firebase/CoreOnly (= 10.7.0)
     - Flutter
-  - firebase_remote_config (4.0.2):
+  - firebase_remote_config (4.1.0):
     - Firebase/RemoteConfig (= 10.7.0)
     - firebase_core
     - Flutter
@@ -88,8 +88,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Firebase: 0219acf760880eeec8ce479895bd7767466d9f81
-  firebase_core: 18d44f087248303a4a8f05d0099a000c46e3c77a
-  firebase_remote_config: 9f0b72f646bc9931b1c4350829ac2d8734a4393d
+  firebase_core: dee76ded6c693fdb38b8ea39aef7129e32e587a3
+  firebase_remote_config: 9bca00455ced3cebe8bb40691c7b0b81d1f1963a
   FirebaseABTesting: 0c7038e4dce273821e417bdc2b0373ee0e0e8df3
   FirebaseCore: e317665b9d744727a97e623edbbed009320afdd7
   FirebaseCoreInternal: fa2899eb1f340054858d289e5a0fb935a0a74e52
@@ -98,9 +98,9 @@ SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
-  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
+  path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
-  shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
+  shared_preferences_foundation: e2dae3258e06f44cc55f49d42024fd8dd03c590c
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
 
 PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
