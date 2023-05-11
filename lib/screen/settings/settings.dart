@@ -8,6 +8,7 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: commonAppbar(
         context: context,
         title: const Text(
@@ -15,7 +16,30 @@ class SettingsScreen extends ConsumerWidget {
           style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
       ),
-      body: Center(),
+      body: Column(
+        children: [
+          ListTile(
+            leading: Icon(Icons.music_note),
+            title: Text("Sound Effects"),
+            trailing: Switch(
+              value: true,
+              onChanged: (enable) {},
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.lock),
+            title: Text("Privacy Policy"),
+          ),
+          ListTile(
+            leading: Icon(Icons.note_add_outlined),
+            title: Text("Terms of Service"),
+          ),
+          ListTile(
+            leading: Icon(Icons.sentiment_satisfied),
+            title: Text("Feedback"),
+          ),
+        ],
+      ),
     );
   }
 }
