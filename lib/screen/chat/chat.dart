@@ -1,6 +1,6 @@
-import 'package:ai_girl_friends/ext/string_ext.dart';
 import 'package:ai_girl_friends/provider/conversation_provider.dart';
 import 'package:ai_girl_friends/screen/widget/icon.dart';
+import 'package:ai_girl_friends/screen/widget/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -20,8 +20,8 @@ class ChatScreen extends ConsumerStatefulWidget {
 }
 
 class _ChatScreenState extends ConsumerState<ChatScreen> {
-  String _messageText = "";
   final messageController = TextEditingController();
+  bool isEnableSendButton = false;
 
   @override
   void initState() {
@@ -30,6 +30,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       ref
           .read(conversationProvider)
           .getLocalConversation(widget.conversationId);
+    });
+    messageController.addListener(() {
+      setState(() {
+        isEnableSendButton = messageController.text.isNotEmpty;
+      });
     });
   }
 
@@ -104,11 +109,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                           decoration:
                               const InputDecoration(border: InputBorder.none),
                           controller: messageController,
-                          onChanged: (text) {
-                            setState(() {
-                              _messageText = text;
-                            });
-                          },
                         )),
                         const SizedBox(
                           width: 10,
@@ -118,11 +118,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                           child: Container(
                             width: 40,
                             height: 40,
-                            color: _messageText.isBlank()
+                            color: !isEnableSendButton
                                 ? Colors.grey
                                 : Theme.of(context).colorScheme.onBackground,
                             child: InkWell(
-                              onTap: _messageText.isBlank()
+                              onTap: !isEnableSendButton
                                   ? null
                                   : () {
                                       ref
@@ -205,47 +205,56 @@ class MessageList extends StatelessWidget {
                 height: 40,
               ),
             ),
-          Flexible(
-            child: Stack(
-              alignment: isMe ? Alignment.bottomRight : Alignment.bottomLeft,
-              children: [
-                isMe
-                    ? Image.asset(
-                        'assets/images/chat_arrow_one.png',
-                      )
-                    : ColorFiltered(
-                        colorFilter: ColorFilter.mode(
-                            Color(message.sender.mainColor), BlendMode.srcIn),
-                        child: Image.asset(
-                          'assets/images/chat_arrow_two.png',
+          message.status == MessageStatus.typing
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: LoadingIndicator(
+                    dotDuration: const Duration(milliseconds: 300),
+                  ),
+                )
+              : Flexible(
+                  child: Stack(
+                    alignment:
+                        isMe ? Alignment.bottomRight : Alignment.bottomLeft,
+                    children: [
+                      isMe
+                          ? Image.asset(
+                              'assets/images/chat_arrow_one.png',
+                            )
+                          : ColorFiltered(
+                              colorFilter: ColorFilter.mode(
+                                  Color(message.sender.mainColor),
+                                  BlendMode.srcIn),
+                              child: Image.asset(
+                                'assets/images/chat_arrow_two.png',
+                              ),
+                            ),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: const Radius.circular(10),
+                            topRight: const Radius.circular(10),
+                            bottomRight:
+                                isMe ? Radius.zero : const Radius.circular(10),
+                            bottomLeft:
+                                isMe ? const Radius.circular(10) : Radius.zero,
+                          ),
+                          color: isMe
+                              ? const Color(0xFF343434)
+                              : Color(message.sender.mainColor),
+                        ),
+                        margin: EdgeInsets.only(
+                            left: isMe ? 100 : 6, right: isMe ? 6 : 100),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 10),
+                        child: Text(
+                          message.message,
+                          maxLines: 100,
                         ),
                       ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: const Radius.circular(10),
-                      topRight: const Radius.circular(10),
-                      bottomRight:
-                          isMe ? Radius.zero : const Radius.circular(10),
-                      bottomLeft:
-                          isMe ? const Radius.circular(10) : Radius.zero,
-                    ),
-                    color: isMe
-                        ? const Color(0xFF343434)
-                        : Color(message.sender.mainColor),
-                  ),
-                  margin: EdgeInsets.only(
-                      left: isMe ? 100 : 6, right: isMe ? 6 : 100),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  child: Text(
-                    message.message,
-                    maxLines: 100,
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
         ],
       ),
     );

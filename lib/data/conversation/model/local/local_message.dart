@@ -5,6 +5,7 @@ class LocalMessage {
   final int conversationId;
   late String sender;
   final String message;
+  final int status;
   late int createdAt;
   late int updatedAt;
 
@@ -13,6 +14,7 @@ class LocalMessage {
     required this.conversationId,
     required this.message,
     required this.sender,
+    required this.status,
   }) {
     createdAt = DateTime.now().microsecondsSinceEpoch;
     updatedAt = DateTime.now().microsecondsSinceEpoch;
@@ -23,6 +25,7 @@ class LocalMessage {
         'conversationId': conversationId,
         'sender': sender,
         'message': message,
+        'status': status,
         'createdAt': createdAt,
         'updatedAt': updatedAt
       };
@@ -33,6 +36,7 @@ class LocalMessage {
       conversationId: json['conversationId'],
       message: json['message'],
       sender: json['sender'],
+      status: json['status'],
     )
       ..createdAt = json['createdAt']
       ..updatedAt = json['updatedAt'];
@@ -43,6 +47,7 @@ class LocalMessage {
         conversationId: message.conversationId,
         message: message.message,
         sender: message.sender.id,
+        status: message.status.index,
       )
         ..createdAt = message.createdAt
         ..updatedAt = message.updatedAt;

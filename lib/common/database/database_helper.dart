@@ -28,6 +28,7 @@ class DatabaseHelper {
   String colMessageConversationId = 'conversationId';
   String colMessageSender = 'sender';
   String colMessageMessage = 'message';
+  String colMessageStatus = 'status';
 
   // User table
   String colUserId = 'id';
@@ -71,7 +72,7 @@ class DatabaseHelper {
     await db.execute(
         'CREATE TABLE $conversationTable($colConversationId INTEGER PRIMARY KEY AUTOINCREMENT, $colConversationType INTEGER NOT NULL, $colConversationTitle TEXT, $colConversationCreator TEXT NOT NULL, $colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL)');
     await db.execute(
-        'CREATE TABLE $messageTable($colMessageId INTEGER PRIMARY KEY AUTOINCREMENT, $colMessageConversationId INTEGER NOT NULL, $colMessageSender TEXT NOT NULL, $colMessageMessage TEXT NOT NULL, $colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL, FOREIGN KEY($colMessageConversationId) REFERENCES $conversationTable($colConversationId))');
+        'CREATE TABLE $messageTable($colMessageId INTEGER PRIMARY KEY AUTOINCREMENT, $colMessageConversationId INTEGER NOT NULL, $colMessageSender TEXT NOT NULL, $colMessageStatus INTEGER NOT NULL, $colMessageMessage TEXT NOT NULL, $colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL, FOREIGN KEY($colMessageConversationId) REFERENCES $conversationTable($colConversationId))');
     await db.execute(
         'CREATE TABLE $userTable($colUserId TEXT PRIMARY KEY, $colUserName TEXT NOT NULL ,$colUserAge INTEGER NOT NULL, $colUserGender INTEGER NOT NULL, $colUserIsMe INTEGER NOT NULL ,$colUserBio TEXT NOT NULL, $colUserProfileBio TEXT NOT NULL, $colUserProfileInterests TEXT NOT NULL, $colUserChatAvatar TEXT NOT NULL, $colUserLargeBody TEXT NOT NULL, $colUserLargeBodyBlurCutOff TEXT NOT NULL, $colUserLargeBackground TEXT NOT NULL,  $colUserGifAvatar TEXT NOT NULL, $colUserJob TEXT NOT NULL, $colUserMainColor INTEGER NOT NULL, $colUserBackgroundColor INTEGER NOT NULL, $colCreatedAt INTEGER NOT NULL, $colUpdateAt INTEGER NOT NULL)');
     await db.execute(

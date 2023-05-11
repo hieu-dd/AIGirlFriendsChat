@@ -104,26 +104,58 @@ class ConversationRepositoryImpl implements ConversationRepository {
       yield 0;
     } else {
       final me = await userDao.findMe();
-      final mes =
-          Message(conversationId: conversationId, message: message, sender: me);
-      yield await _insertMessageToConversation(mes, conversation);
+      final receiver = conversation.participants.firstWhere(
+        (participant) => !participant.isMe,
+      );
+      final mes = Message(
+          conversationId: conversationId,
+          message: message,
+          sender: me,
+          status: MessageStatus.sending);
+      yield await _insertMessageToSingleConversation(mes, conversationId);
+      final typing = Message(
+        conversationId: conversationId,
+        message: "",
+        sender: receiver,
+        status: MessageStatus.typing,
+      );
+      final waitId =
+          await _insertMessageToSingleConversation(typing, conversationId);
+      yield waitId;
+      await Future.delayed(Duration(seconds: 2));
       try {
         final response = await conversationApi.sendMessage(
-            SendTurboMessagesRequest(
-                messages: [RemoteMessage(role: 'user', content: message)]));
+          SendTurboMessagesRequest(
+            messages: [
+              RemoteMessage(role: 'user', content: message),
+            ],
+          ),
+        );
         final responseMes = Message(
+            id: waitId,
             conversationId: conversationId,
             message: response.content,
-            sender: conversation.participants
-                .firstWhere((participant) => !participant.isMe));
-        yield await _insertMessageToConversation(responseMes, conversation);
+            sender: conversation.participants.firstWhere(
+              (participant) => !participant.isMe,
+            ),
+            status: MessageStatus.sent);
+        yield await _insertMessageToSingleConversation(
+          responseMes,
+          conversationId,
+        );
       } catch (e) {
         final responseMes = Message(
-            conversationId: conversationId,
-            message: "Tôi không thể trả lời lúc này",
-            sender: conversation.participants
-                .firstWhere((participant) => !participant.isMe));
-        yield await _insertMessageToConversation(responseMes, conversation);
+          id: waitId,
+          conversationId: conversationId,
+          message: "Tôi không thể trả lời lúc này",
+          sender: conversation.participants
+              .firstWhere((participant) => !participant.isMe),
+          status: MessageStatus.fail,
+        );
+        yield await _insertMessageToSingleConversation(
+          responseMes,
+          conversationId,
+        );
       }
     }
   }
@@ -152,6 +184,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
       conversationId: local.conversationId,
       message: local.message,
       sender: sender,
+      status: MessageStatus.values[local.status],
     )
       ..updatedAt = local.updatedAt
       ..createdAt = local.createdAt;
@@ -162,7 +195,9 @@ class ConversationRepositoryImpl implements ConversationRepository {
   }
 
   Future<int> _insertMessageToConversation(
-      Message message, Conversation conversation) async {
+    Message message,
+    Conversation conversation,
+  ) async {
     final newConversation = Conversation(
         id: conversation.id,
         type: conversation.type,
@@ -171,5 +206,12 @@ class ConversationRepositoryImpl implements ConversationRepository {
         messages: [message, ...conversation.messages])
       ..createdAt = conversation.createdAt;
     return await insertConversation(newConversation);
+  }
+
+  Future<int> _insertMessageToSingleConversation(
+    Message message,
+    int conversationId,
+  ) {
+    return messageDao.insertMessage(LocalMessage.fromDomain(message));
   }
 }

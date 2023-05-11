@@ -7,6 +7,7 @@ class Message extends Equatable {
   int conversationId;
   late User sender;
   final String message;
+  final MessageStatus status;
   late int createdAt;
   late int updatedAt;
 
@@ -15,6 +16,7 @@ class Message extends Equatable {
     required this.conversationId,
     required this.message,
     required this.sender,
+    required this.status,
   }) {
     createdAt = DateTime.now().microsecondsSinceEpoch;
     updatedAt = DateTime.now().microsecondsSinceEpoch;
@@ -60,4 +62,11 @@ class Message extends Equatable {
         createdAt,
         updatedAt,
       ];
+}
+
+enum MessageStatus {
+  sent,
+  sending,
+  fail,
+  typing,
 }
