@@ -47,6 +47,7 @@ Future<void> configureDependencies() async {
       messageDao: getIt(),
       userDao: getIt(),
       conversationApi: getIt(),
+      getRemoteConfig: getIt(),
     ),
   );
   getIt.registerSingleton<UserRepository>(UserRepositoryImpl(getIt()));

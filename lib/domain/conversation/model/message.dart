@@ -7,7 +7,7 @@ class Message extends Equatable {
   int conversationId;
   late User sender;
   final String message;
-  final MessageStatus status;
+  MessageStatus status;
   late int createdAt;
   late int updatedAt;
 

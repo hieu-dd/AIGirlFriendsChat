@@ -9,8 +9,11 @@ import 'package:ai_girl_friends/data/conversation/model/remote/remote_message.da
 import 'package:ai_girl_friends/data/conversation/model/remote/send_turbo_messages.dart';
 import 'package:ai_girl_friends/domain/conversation/model/conversation.dart';
 import 'package:ai_girl_friends/domain/conversation/model/message.dart';
+import 'package:ai_girl_friends/domain/remote_config/model/remote_config.dart';
+import 'package:ai_girl_friends/ext/list_ext.dart';
 
 import '../../../domain/conversation/repository/conversation_repository.dart';
+import '../../../domain/remote_config/usecase/get_remote_config.dart';
 import '../../../domain/user/model/user.dart';
 import '../datasource/conversation_api.dart';
 
@@ -20,14 +23,15 @@ class ConversationRepositoryImpl implements ConversationRepository {
   final MessageDao messageDao;
   final UserDao userDao;
   final ConversationApi conversationApi;
+  final GetRemoteConfig getRemoteConfig;
 
-  ConversationRepositoryImpl({
-    required this.conversationDao,
-    required this.participantDao,
-    required this.messageDao,
-    required this.userDao,
-    required this.conversationApi,
-  });
+  ConversationRepositoryImpl(
+      {required this.conversationDao,
+      required this.participantDao,
+      required this.messageDao,
+      required this.userDao,
+      required this.conversationApi,
+      required this.getRemoteConfig});
 
   @override
   Future<List<Conversation>> getAllConversation() async {
@@ -107,12 +111,14 @@ class ConversationRepositoryImpl implements ConversationRepository {
       final receiver = conversation.participants.firstWhere(
         (participant) => !participant.isMe,
       );
-      final mes = Message(
+      final sendMessage = Message(
           conversationId: conversationId,
           message: message,
           sender: me,
           status: MessageStatus.sending);
-      yield await _insertMessageToSingleConversation(mes, conversationId);
+      final sentId =
+          await _insertMessageToSingleConversation(sendMessage, conversationId);
+      yield sentId;
       final typing = Message(
         conversationId: conversationId,
         message: "",
@@ -122,15 +128,9 @@ class ConversationRepositoryImpl implements ConversationRepository {
       final waitId =
           await _insertMessageToSingleConversation(typing, conversationId);
       yield waitId;
-      await Future.delayed(Duration(seconds: 2));
       try {
-        final response = await conversationApi.sendMessage(
-          SendTurboMessagesRequest(
-            messages: [
-              RemoteMessage(role: 'user', content: message),
-            ],
-          ),
-        );
+        final request = await _createSendMessageRequest(message, conversation);
+        final response = await conversationApi.sendMessage(request);
         final responseMes = Message(
             id: waitId,
             conversationId: conversationId,
@@ -139,6 +139,11 @@ class ConversationRepositoryImpl implements ConversationRepository {
               (participant) => !participant.isMe,
             ),
             status: MessageStatus.sent);
+        await _insertMessageToSingleConversation(
+            sendMessage
+              ..id = sentId
+              ..status = MessageStatus.sent,
+            conversationId);
         yield await _insertMessageToSingleConversation(
           responseMes,
           conversationId,
@@ -152,6 +157,11 @@ class ConversationRepositoryImpl implements ConversationRepository {
               .firstWhere((participant) => !participant.isMe),
           status: MessageStatus.fail,
         );
+        await _insertMessageToSingleConversation(
+            sendMessage
+              ..id = sentId
+              ..status = MessageStatus.fail,
+            conversationId);
         yield await _insertMessageToSingleConversation(
           responseMes,
           conversationId,
@@ -213,5 +223,47 @@ class ConversationRepositoryImpl implements ConversationRepository {
     int conversationId,
   ) {
     return messageDao.insertMessage(LocalMessage.fromDomain(message));
+  }
+
+  Future<SendTurboMessagesRequest> _createSendMessageRequest(
+    String newMessage,
+    Conversation conversation,
+  ) async {
+    final me = await userDao.findMe();
+    final receiverId = conversation.participants
+        .firstWhere((participant) => !participant.isMe)
+        .id;
+    final remoteConfigResult = await getRemoteConfig.call();
+    RemoteConfig remoteConfig;
+    remoteConfig = remoteConfigResult
+        .getOrElse(() => throw Exception('Cannot get remote config'));
+
+    final systemPrompt = remoteConfig.systemPrompts
+        .firstWhere((prompt) => prompt.characterId == receiverId)
+        .content;
+    final userPrompt = remoteConfig.userPrompt
+        .replaceAll('{name}', me.name)
+        .replaceAll('{age}', me.age.toString())
+        .replaceAll('{gender}', me.gender.name)
+        .replaceAll('{job}', me.job);
+    final prompt = remoteConfig.prompts
+        .firstWhere((prompt) => prompt.characterId == receiverId);
+    final systemMessage =
+        RemoteMessage(role: 'system', content: '$systemPrompt.$userPrompt');
+    final chatMessages = conversation.messages
+        .where((element) => element.status == MessageStatus.sent)
+        .take(remoteConfig.userMessageCount)
+        .mapTo((message) {
+      final role = message.sender.isMe ? 'user' : 'assistant';
+      final content = message.sender.isMe
+          ? '${message.message}(${prompt.content})'
+          : message.message;
+
+      return RemoteMessage(role: role, content: content);
+    });
+    final sendMessage =
+        RemoteMessage(role: 'user', content: '$newMessage(${prompt.content})');
+    final messages = [systemMessage, ...chatMessages.reversed, sendMessage];
+    return SendTurboMessagesRequest(messages: messages);
   }
 }

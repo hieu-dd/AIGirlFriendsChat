@@ -1,5 +1,5 @@
 class SystemPrompt {
-  final int characterId;
+  final String characterId;
   final String content;
 
   SystemPrompt({
@@ -8,7 +8,7 @@ class SystemPrompt {
   });
 
   SystemPrompt.fromJson(dynamic json)
-      : characterId = json['character_id'],
+      : characterId = json['character_id'].toString(),
         content = json['content'];
 
   Map<String, dynamic> toJson() {

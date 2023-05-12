@@ -30,7 +30,6 @@ class _GirlFriendListScreenState extends ConsumerState<GirlFriendListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final conversations = ref.watch(conversationsProvider).allConversation;
     final girlFriends = ref.watch(girlFriendsProvider).girlFriends;
     void _goToChat(User user, BuildContext context) async {
       final conversationId =

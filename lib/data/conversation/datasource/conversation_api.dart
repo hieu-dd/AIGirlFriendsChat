@@ -19,7 +19,7 @@ class ConversationApi {
       options: Options(headers: {
         "Content-Type": "application/json",
         "Authorization":
-            "Bearer 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",
+            "Bearer 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",
       }),
     ))
         .data;

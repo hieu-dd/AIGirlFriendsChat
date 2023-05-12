@@ -188,6 +188,7 @@ class MessageList extends StatelessWidget {
 
   Widget _buildChatMessage(Message message, BuildContext context) {
     final isMe = message.sender.isMe;
+    final isFail = message.status == MessageStatus.fail;
     return Padding(
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Row(
@@ -250,6 +251,9 @@ class MessageList extends StatelessWidget {
                         child: Text(
                           message.message,
                           maxLines: 100,
+                          style: TextStyle(
+                            color: isMe && isFail ? Colors.red : Colors.white,
+                          ),
                         ),
                       ),
                     ],
