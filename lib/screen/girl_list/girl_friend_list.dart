@@ -71,6 +71,7 @@ class _GirlFriendListScreenState extends ConsumerState<GirlFriendListScreen> {
                       gotoChat: _goToChat,
                       gotoProfile: _goToProfile,
                     )),
+                scrollBehavior: ScrollBehavior(),
               ),
             ),
             SizedBox(
