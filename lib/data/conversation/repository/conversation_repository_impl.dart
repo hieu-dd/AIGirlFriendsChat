@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ai_girl_friends/common/database/dao/conversation_dao.dart';
 import 'package:ai_girl_friends/common/database/dao/message_dao.dart';
 import 'package:ai_girl_friends/common/database/dao/participant_dao.dart';
@@ -255,8 +257,10 @@ class ConversationRepositoryImpl implements ConversationRepository {
         .take(remoteConfig.userMessageCount)
         .mapTo((message) {
       final role = message.sender.isMe ? 'user' : 'assistant';
+      final useRandom = Random().nextInt(remoteConfig.randomRange) + 1 ==
+          remoteConfig.randomRange;
       final content = message.sender.isMe
-          ? '${message.message}(${prompt.content})'
+          ? '${message.message}(${useRandom ? prompt.randomContent : prompt.content})'
           : message.message;
 
       return RemoteMessage(role: role, content: content);
