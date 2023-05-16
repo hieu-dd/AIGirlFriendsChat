@@ -65,16 +65,16 @@ class _GirlFriendListScreenState extends ConsumerState<GirlFriendListScreen> {
             ),
             Expanded(
               child: PageView(
+                scrollBehavior: ScrollBehavior(),
                 children: girlFriends.mapTo((user) => _userProfileItem(
                       user,
                       context: context,
                       gotoChat: _goToChat,
                       gotoProfile: _goToProfile,
                     )),
-                scrollBehavior: ScrollBehavior(),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 45,
             )
           ],

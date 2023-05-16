@@ -136,7 +136,7 @@ class GirlProfileScreen extends ConsumerWidget {
           height: 30,
         ),
         _buildUserHobbies(user.profileInterests.take(3).toList(), context),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         _buildUserHobbies(user.profileInterests.sublist(2, 4), context),
@@ -178,7 +178,7 @@ class GirlProfileScreen extends ConsumerWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               width: 30,
             ),
             RotatedBox(
@@ -191,14 +191,14 @@ class GirlProfileScreen extends ConsumerWidget {
                     color: Color(user.mainColor)),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 16,
             ),
             Expanded(
                 child: Text(
               user.profileBio,
               textAlign: TextAlign.justify,
-              style: TextStyle(fontSize: 14, height: 2),
+              style: const TextStyle(fontSize: 14, height: 2),
             )),
             const SizedBox(
               width: 30,

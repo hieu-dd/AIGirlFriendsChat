@@ -46,6 +46,7 @@ dependencies:
   go_router: ^6.5.7
   uuid: ^3.0.7
   intl: ^0.18.1
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:
