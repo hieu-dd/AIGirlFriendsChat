@@ -3,7 +3,7 @@ import 'package:ai_girl_friends/domain/conversation/model/conversation.dart';
 import '../../user/model/user.dart';
 
 abstract class ConversationRepository {
-  Future<List<Conversation>> getAllConversation();
+  Stream<List<Conversation>> getAllConversation();
 
   Future<Conversation?> getConversationById(int conversationId);
 

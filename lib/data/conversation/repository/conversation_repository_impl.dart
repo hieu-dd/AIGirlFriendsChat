@@ -36,13 +36,16 @@ class ConversationRepositoryImpl implements ConversationRepository {
       required this.getRemoteConfig});
 
   @override
-  Future<List<Conversation>> getAllConversation() async {
-    final conversations = await conversationDao.getAllConversations();
-    final futures = conversations.map((conversation) async {
-      return await _getConversationFromLocal(conversation);
+  Stream<List<Conversation>> getAllConversation() {
+    return conversationDao.conversationsController.stream
+        .asyncMap((event) async {
+      final conversations = event as List<LocalConversation>;
+      final futures = conversations.map((conversation) async {
+        return await _getConversationFromLocal(conversation);
+      });
+      final results = await Future.wait(futures);
+      return results.toList();
     });
-    final results = await Future.wait(futures);
-    return results.toList();
   }
 
   @override
@@ -87,8 +90,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
 
   @override
   Future<int> insertConversation(Conversation conversation) async {
-    final conversationId = await conversationDao
-        .insertConversation(LocalConversation.fromDomain(conversation));
+    final conversationId = conversation.id!;
     final insertParticipants = conversation.participants.map((user) async {
       await userDao.insertUser(user);
       await participantDao
@@ -100,6 +102,8 @@ class ConversationRepositoryImpl implements ConversationRepository {
     });
     await Future.wait(insertParticipants);
     await Future.wait(insertMessages);
+    await conversationDao
+        .insertConversation(LocalConversation.fromDomain(conversation));
     return conversationId;
   }
 
@@ -180,6 +184,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
     } else {
       final me = await userDao.findMe();
       final newConversation = Conversation(
+        id: user.id.hashCode,
         type: ConversationType.single,
         creator: me,
         participants: [me, user],

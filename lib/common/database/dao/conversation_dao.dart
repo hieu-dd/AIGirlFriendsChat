@@ -1,14 +1,20 @@
 import 'package:ai_girl_friends/common/database/database_helper.dart';
 import 'package:ai_girl_friends/data/conversation/model/local/local_conversation.dart';
 import 'package:ai_girl_friends/domain/conversation/model/conversation.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ConversationDao {
   final DatabaseHelper databaseHelper = DatabaseHelper.instance;
+  final conversationsController = BehaviorSubject();
+
+  ConversationDao() {
+    getAllConversations();
+  }
 
   Future<int> insertConversation(LocalConversation conversation) async {
     var db = await databaseHelper.db;
-    return await db.transaction((txn) async {
+    final local = await db.transaction((txn) async {
       return await txn.insert(
         databaseHelper.conversationTable,
         {
@@ -18,6 +24,8 @@ class ConversationDao {
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
     });
+    getAllConversations();
+    return local;
   }
 
   Future<LocalConversation?> getConversationById(
@@ -38,14 +46,16 @@ class ConversationDao {
     }
   }
 
-  Future<List<LocalConversation>> getAllConversations() async {
+  void getAllConversations() async {
     var db = await databaseHelper.db;
     var result = await db.transaction((txn) async {
       return await txn.query(
         databaseHelper.conversationTable,
       );
     });
-    return result.map((e) => LocalConversation.fromDb(e)).toList();
+    final conversations =
+        result.map((e) => LocalConversation.fromDb(e)).toList();
+    conversationsController.sink.add(conversations);
   }
 
   Future<LocalConversation?> getConversationByUser(String user) async {

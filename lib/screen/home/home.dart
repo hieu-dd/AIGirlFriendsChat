@@ -1,6 +1,6 @@
+import 'package:ai_girl_friends/screen/conversation_list/conversation_list.dart';
 import 'package:ai_girl_friends/screen/girl_list/girl_friend_list.dart';
 import 'package:ai_girl_friends/screen/premium/premium.dart';
-import 'package:ai_girl_friends/screen/settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static const List<Widget> _widgetOptions = <Widget>[
     Center(),
     GirlFriendListScreen(),
-    SettingsScreen(),
+    ConversationListScreen(),
   ];
 
   void _onItemTapped(int index, BuildContext context) {
