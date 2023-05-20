@@ -99,11 +99,14 @@ Widget _userProfileItem(
       child: Stack(
         alignment: AlignmentDirectional.bottomStart,
         children: [
-          FractionallySizedBox(
-            heightFactor: 1,
-            child: Image.asset(
-              user.largeBody,
-              fit: BoxFit.fitHeight,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: FractionallySizedBox(
+              heightFactor: 1,
+              child: Image.asset(
+                user.largeBody,
+                fit: BoxFit.fitHeight,
+              ),
             ),
           ),
           Padding(

@@ -30,29 +30,40 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   void onContinue(BuildContext context) {
     final age = getAgeFromBirthday(
         '${_dayController.text}/${_monthController.text}/${_yearController.text}');
+    switch (currentStep) {
+      case 0:
+        if (_nameController.text.isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Pls enter your name")));
+          return;
+        }
+        break;
+      case 2:
+        if (age == null || age <= 0) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Pls enter valid birthday")));
+          return;
+        }
+        break;
+      case 3:
+        if (_jobController.text.isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Pls enter your job")));
+          return;
+        }
+        break;
+    }
     if (currentStep < 3) {
-      setState(() {
-        currentStep++;
+      FocusScope.of(context).unfocus();
+      Future.delayed(const Duration(milliseconds: 200), () {
+        setState(() {
+          currentStep++;
+        });
       });
-    } else if (_nameController.text.isEmpty) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Pls enter your name")));
-      setState(() {
-        currentStep = 0;
-      });
-    } else if (age == null || age <= 0) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Pls enter valid birthday")));
-      setState(() {
-        currentStep = 2;
-      });
-    } else if (_jobController.text.isEmpty) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Pls enter your job")));
     } else {
       ref.read(authProvider.notifier).loginWithUser(
             name: _nameController.text,
-            age: age,
+            age: age!,
             genderValue: _selectedGender.name,
             job: _jobController.text,
           );
@@ -135,6 +146,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               trailing: IconContinue(),
               title: 'Continue',
             ),
+            const SizedBox(
+              height: 20,
+            )
           ],
         ),
       ),
