@@ -68,7 +68,7 @@ class GirlProfileScreen extends ConsumerWidget {
     final backgroundColor = Color(user.backgroundColor);
     return [
       Image.asset(
-        'assets/images/yen_large_bg.png',
+        user.largeBackground,
         fit: BoxFit.fitWidth,
       ),
       Container(

@@ -71,6 +71,10 @@ flutter:
     - assets/images/yen_large_bg.png
     - assets/images/trist.png
     - assets/images/trist_bg.png
+    - assets/images/trist_large_bg.png
+    - assets/images/jane.png
+    - assets/images/jane_bg.png
+    - assets/images/jane_large_bg.png
     - assets/images/crown.png
     - assets/images/setting.png
     - assets/images/heart.png

@@ -12,10 +12,12 @@ class User extends Equatable {
   String largeBody = "";
   String largeBodyBlurCutOff = "";
   String largeBackground = "";
+  String profileBackground = "";
   String gifAvatar = "";
   String job = "";
   int mainColor = 0xFFFFFFFF;
   int backgroundColor = 0xFFFFFFFF;
+  bool enable = true;
 
   bool isMe;
   late int createdAt;
@@ -38,6 +40,7 @@ class User extends Equatable {
     this.profileInterests = const [],
     this.mainColor = 0xFFFFFFFF,
     this.backgroundColor = 0xFFFFFFFF,
+    this.enable = true,
   }) {
     createdAt = DateTime.now().microsecondsSinceEpoch;
     updatedAt = DateTime.now().microsecondsSinceEpoch;

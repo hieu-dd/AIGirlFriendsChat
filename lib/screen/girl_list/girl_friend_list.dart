@@ -97,10 +97,29 @@ Widget _userProfileItem(
     child: SizedBox(
       height: double.infinity,
       child: Stack(
-        alignment: AlignmentDirectional.bottomStart,
+        alignment: AlignmentDirectional.bottomCenter,
         children: [
+          if (!user.enable)
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 29,
+              ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                child: Container(
+                  color: Colors.yellow,
+                  child: FractionallySizedBox(
+                    heightFactor: 0.95,
+                    child: Container(),
+                  ),
+                ),
+              ),
+            ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.only(
+              bottom: 1,
+              top: 1,
+            ),
             child: FractionallySizedBox(
               heightFactor: 1,
               child: Image.asset(
@@ -110,7 +129,8 @@ Widget _userProfileItem(
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding:
+                const EdgeInsets.only(left: 30, right: 30, bottom: 1, top: 1),
             child: ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(20.0)),
               child: FractionallySizedBox(
@@ -122,7 +142,8 @@ Widget _userProfileItem(
               ),
             ),
           ),
-          Padding(
+          Container(
+            width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 50),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -145,40 +166,53 @@ Widget _userProfileItem(
                       inherit: false,
                       fontWeight: FontWeight.normal),
                 ),
-                Text(
-                  user.profileBio,
-                  style: const TextStyle(
-                      fontSize: 12,
-                      inherit: false,
-                      fontWeight: FontWeight.normal),
-                ),
-                const SizedBox(height: 45),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          gotoProfile?.call(user, context);
-                        },
-                        icon: const Icon(
-                          Icons.account_box_outlined,
-                          size: 36,
-                        )),
-                    Container(
-                      width: 2,
-                      height: 24,
-                      color: colorScheme.onBackground,
-                    ),
-                    IconButton(
-                        onPressed: () {
-                          gotoChat?.call(user, context);
-                        },
-                        icon: const Icon(
-                          Icons.chat_bubble_outline,
-                          size: 36,
-                        )),
-                  ],
-                ),
+                user.enable
+                    ? Text(
+                        user.profileBio,
+                        style: const TextStyle(
+                            fontSize: 12,
+                            inherit: false,
+                            fontWeight: FontWeight.normal),
+                      )
+                    : const SizedBox(
+                        height: 50,
+                      ),
+                const SizedBox(height: 40),
+                user.enable
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                gotoProfile?.call(user, context);
+                              },
+                              icon: const Icon(
+                                Icons.account_box_outlined,
+                                size: 36,
+                              )),
+                          Container(
+                            width: 2,
+                            height: 24,
+                            color: colorScheme.onBackground,
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                gotoChat?.call(user, context);
+                              },
+                              icon: const Icon(
+                                Icons.chat_bubble_outline,
+                                size: 36,
+                              )),
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            child: Text("Unlock ${user.name}"),
+                          )
+                        ],
+                      ),
                 const SizedBox(height: 18)
               ],
             ),

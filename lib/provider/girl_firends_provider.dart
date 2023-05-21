@@ -9,6 +9,8 @@ class GirlFriendsNotifier extends ChangeNotifier {
 
   List<User> get girlFriends => _girlFriends;
 
+  GirlFriendsNotifier() {}
+
   Future<List<User>> fetchGirlFriends() async {
     _girlFriends = _users;
     notifyListeners();
@@ -40,6 +42,7 @@ List<User> _users = [
     backgroundColor: 0xFF25080B,
     largeBody: 'assets/images/trist.png',
     largeBodyBlurCutOff: 'assets/images/trist_bg.png',
+    largeBackground: 'assets/images/trist_large_bg.png',
   ),
   User(
     id: '1',
@@ -60,5 +63,29 @@ List<User> _users = [
     backgroundColor: 0xFF32203A,
     largeBody: 'assets/images/yen.png',
     largeBodyBlurCutOff: 'assets/images/yen_bg.png',
+    largeBackground: 'assets/images/yen_large_bg.png',
+    enable: true,
+  ),
+  User(
+    id: '3',
+    name: 'Jane',
+    age: 21,
+    gender: Gender.female,
+    bio: "Dog lover, pizza enthusiast",
+    profileBio:
+        "I'm a student with a passion for animals and a weakness for pizza. When I'm not studying, I volunteer at the local animal shelter and spend way too much time watching Netflix.",
+    job: "Student",
+    profileInterests: const [
+      "Hiking",
+      "Playing with dogs",
+      "Reading",
+      "Photography",
+    ],
+    mainColor: 0xFFC96C5A,
+    backgroundColor: 0xFFC96C5A,
+    largeBody: 'assets/images/jane.png',
+    largeBodyBlurCutOff: 'assets/images/jane_bg.png',
+    largeBackground: 'assets/images/jane_large_bg.png',
+    enable: false,
   ),
 ];
