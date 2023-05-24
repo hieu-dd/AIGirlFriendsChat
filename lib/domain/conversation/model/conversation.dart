@@ -23,6 +23,16 @@ class Conversation extends Equatable {
     updatedAt = DateTime.now().microsecondsSinceEpoch;
   }
 
+  Conversation copy({List<Message>? messages}) => Conversation(
+        id: id,
+        type: type,
+        creator: creator,
+        participants: participants,
+        messages: messages ?? this.messages,
+      )
+        ..createdAt = createdAt
+        ..updatedAt = updatedAt;
+
   @override
   List<Object?> get props => [
         id,

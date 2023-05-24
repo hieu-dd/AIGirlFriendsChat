@@ -121,20 +121,10 @@ class ConversationRepositoryImpl implements ConversationRepository {
       final sentId =
           await _insertMessageToSingleConversation(sendMessage, conversationId);
       yield sentId;
-      final typing = Message(
-        conversationId: conversationId,
-        message: "",
-        sender: receiver,
-        status: MessageStatus.typing,
-      );
-      final waitId =
-          await _insertMessageToSingleConversation(typing, conversationId);
-      yield waitId;
       try {
         final request = await _createSendMessageRequest(message, conversation);
         final response = await conversationApi.sendMessage(request);
         final responseMes = Message(
-            id: waitId,
             conversationId: conversationId,
             message: response.content,
             sender: conversation.participants.firstWhere(
@@ -152,7 +142,6 @@ class ConversationRepositoryImpl implements ConversationRepository {
         );
       } catch (e) {
         final responseMes = Message(
-          id: waitId,
           conversationId: conversationId,
           message: "Tôi không thể trả lời lúc này",
           sender: conversation.participants

@@ -9,4 +9,12 @@ extension IterableExt<E> on Iterable<E> {
       return null;
     }
   }
+
+  E? tryFirst() {
+    try {
+      return first;
+    } catch (e) {
+      return null;
+    }
+  }
 }
