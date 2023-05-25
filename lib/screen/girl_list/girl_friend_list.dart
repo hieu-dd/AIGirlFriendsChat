@@ -110,26 +110,27 @@ Widget _userProfileItem(
         alignment: AlignmentDirectional.bottomCenter,
         children: [
           if (!user.enable)
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 29,
-              ),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                child: Container(
-                  color: Colors.yellow,
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 29),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.yellow, width: 2),
+                  borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                ),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                   child: FractionallySizedBox(
                     heightFactor: 0.95,
-                    child: Container(),
+                    child: Image.asset(
+                      user.largeBodyBlurCutOff,
+                      fit: BoxFit.fitHeight,
+                    ),
                   ),
                 ),
               ),
             ),
           Padding(
-            padding: const EdgeInsets.only(
-              bottom: 1,
-              top: 1,
-            ),
+            padding: const EdgeInsets.symmetric(vertical: 1),
             child: FractionallySizedBox(
               heightFactor: 1,
               child: Image.asset(
@@ -139,8 +140,7 @@ Widget _userProfileItem(
             ),
           ),
           Padding(
-            padding:
-                const EdgeInsets.only(left: 30, right: 30, bottom: 1, top: 1),
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 1),
             child: ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(20.0)),
               child: FractionallySizedBox(
