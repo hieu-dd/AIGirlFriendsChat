@@ -24,137 +24,153 @@ class _PremiumScreenState extends ConsumerState<PremiumScreen> {
   @override
   Widget build(BuildContext context) {
     final backgroundColor = Theme.of(context).colorScheme.background;
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       backgroundColor: backgroundColor,
-      body: Column(
-        children: [
-          Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: Image.asset(
-                  ImageConst.premiumBg,
-                  width: double.infinity,
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-              Container(
-                height: 100,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [
-                    backgroundColor,
-                    backgroundColor.withOpacity(0.9),
-                    backgroundColor.withOpacity(0.7),
-                    Colors.transparent,
-                  ],
-                )),
-              ),
-              ShaderMask(
-                blendMode: BlendMode.srcATop,
-                shaderCallback: (Rect bounds) {
-                  return const LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [Color(0xFFFFCB69), Color(0xFFFFE09F)],
-                  ).createShader(bounds);
-                },
-                child: Text(
-                  'GET PREMIUM',
-                  style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
-                    shadows: [
-                      Shadow(
-                        blurRadius: 10.0,
-                        color: Colors.yellow.withOpacity(0.8),
-                        offset: Offset(-0.0, -0.0),
-                      ),
-                      Shadow(
-                        blurRadius: 10.0,
-                        color: Colors.yellow.withOpacity(0.8),
-                        offset: Offset(0.0, -0.0),
-                      ),
-                      Shadow(
-                        blurRadius: 10.0,
-                        color: Colors.yellow.withOpacity(0.8),
-                        offset: Offset(0.0, 0.0),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-          const SizedBox(height: 30),
-          _benefitRow('Get deeper into any relationship'),
-          _benefitRow('Unlimited daily messages'),
-          _benefitRow('Remove ads for good'),
-          _benefitRow('Highly prioritized feedback'),
-          const SizedBox(height: 30),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).padding.top),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _registerItem(
-                  '1',
-                  'month',
-                  '\$19.99',
-                  'Best seller',
-                  _selectBenefitIndex == 0,
-                  onClick: () {
-                    _selectBenefit(0);
-                  },
+                Column(
+                  children: [
+                    Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: Image.asset(
+                            ImageConst.premiumBg,
+                            width: double.infinity,
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                        Container(
+                          height: 100,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                            colors: [
+                              backgroundColor,
+                              backgroundColor.withOpacity(0.9),
+                              backgroundColor.withOpacity(0.7),
+                              Colors.transparent,
+                            ],
+                          )),
+                        ),
+                        ShaderMask(
+                          blendMode: BlendMode.srcATop,
+                          shaderCallback: (Rect bounds) {
+                            return const LinearGradient(
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                              colors: [Color(0xFFFFCB69), Color(0xFFFFE09F)],
+                            ).createShader(bounds);
+                          },
+                          child: Text(
+                            'GET PREMIUM',
+                            style: TextStyle(
+                              fontSize: 35,
+                              fontWeight: FontWeight.bold,
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 10.0,
+                                  color: Colors.yellow.withOpacity(0.8),
+                                  offset: Offset(-0.0, -0.0),
+                                ),
+                                Shadow(
+                                  blurRadius: 10.0,
+                                  color: Colors.yellow.withOpacity(0.8),
+                                  offset: Offset(0.0, -0.0),
+                                ),
+                                Shadow(
+                                  blurRadius: 10.0,
+                                  color: Colors.yellow.withOpacity(0.8),
+                                  offset: Offset(0.0, 0.0),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 30),
+                    _benefitRow('Get deeper into any relationship'),
+                    _benefitRow('Unlimited daily messages'),
+                    _benefitRow('Remove ads for good'),
+                    _benefitRow('Highly prioritized feedback'),
+                    const SizedBox(height: 30),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          _registerItem(
+                            '1',
+                            'month',
+                            '\$19.99',
+                            'Best seller',
+                            _selectBenefitIndex == 0,
+                            onClick: () {
+                              _selectBenefit(0);
+                            },
+                          ),
+                          const SizedBox(width: 13),
+                          _registerItem(
+                            '6',
+                            'month',
+                            '\$49.99',
+                            'Save 50%',
+                            _selectBenefitIndex == 1,
+                            onClick: () {
+                              _selectBenefit(1);
+                            },
+                          ),
+                          const SizedBox(width: 13),
+                          _registerItem(
+                            null,
+                            'forever',
+                            '\$99.99',
+                            'Life time',
+                            _selectBenefitIndex == 2,
+                            onClick: () {
+                              _selectBenefit(2);
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    )
+                  ],
                 ),
-                const SizedBox(width: 13),
-                _registerItem(
-                  '6',
-                  'month',
-                  '\$49.99',
-                  'Save 50%',
-                  _selectBenefitIndex == 1,
-                  onClick: () {
-                    _selectBenefit(1);
-                  },
-                ),
-                const SizedBox(width: 13),
-                _registerItem(
-                  null,
-                  'forever',
-                  '\$99.99',
-                  'Life time',
-                  _selectBenefitIndex == 2,
-                  onClick: () {
-                    _selectBenefit(2);
-                  },
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 20.0, right: 20, bottom: 20),
+                  child: PrimaryButton(
+                    onClick: () {},
+                    gradient: const LinearGradient(
+                      colors: [
+                        Color(0xFFFFC452),
+                        Color(0xFFFFD886),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    title: 'Continue',
+                  ),
                 )
               ],
             ),
           ),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 20, bottom: 20),
-            child: PrimaryButton(
-              onClick: () {},
-              gradient: const LinearGradient(
-                colors: [
-                  Color(0xFFFFC452),
-                  Color(0xFFFFD886),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              title: 'Continue',
-            ),
-          )
-        ],
+        ),
       ),
-    ));
+    );
   }
 
   Widget _registerItem(
