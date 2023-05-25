@@ -2,6 +2,7 @@ import 'package:ai_girl_friends/ext/list_ext.dart';
 import 'package:ai_girl_friends/provider/conversations_provider.dart';
 import 'package:ai_girl_friends/provider/girl_firends_provider.dart';
 import 'package:ai_girl_friends/screen/girl_profile/girl_profile.dart';
+import 'package:ai_girl_friends/screen/girl_profile/unlock_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -41,10 +42,17 @@ class _GirlFriendListScreenState extends ConsumerState<GirlFriendListScreen> {
       );
     }
 
-    void _goToProfile(User user, BuildContext context) async {
+    void _goToProfile(User user, BuildContext context) {
       context.goNamed(
         GirlProfileScreen.direction,
         params: {GirlProfileScreen.argProfileId: user.id},
+      );
+    }
+
+    void _unlock(User user) {
+      context.goNamed(
+        UnlockProfileScreen.direction,
+        params: {UnlockProfileScreen.argProfileId: user.id},
       );
     }
 
@@ -71,6 +79,7 @@ class _GirlFriendListScreenState extends ConsumerState<GirlFriendListScreen> {
                       context: context,
                       gotoChat: _goToChat,
                       gotoProfile: _goToProfile,
+                      unlock: _unlock,
                     )),
               ),
             ),
@@ -88,6 +97,7 @@ Widget _userProfileItem(
   User user, {
   Function? gotoChat,
   Function? gotoProfile,
+  Function? unlock,
   required BuildContext context,
 }) {
   final typography = Theme.of(context).typography;
@@ -205,13 +215,18 @@ Widget _userProfileItem(
                               )),
                         ],
                       )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            child: Text("Unlock ${user.name}"),
-                          )
-                        ],
+                    : InkWell(
+                        onTap: () {
+                          unlock?.call(user);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              child: Text("Unlock ${user.name}"),
+                            )
+                          ],
+                        ),
                       ),
                 const SizedBox(height: 18)
               ],

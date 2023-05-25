@@ -1,6 +1,7 @@
 import 'package:ai_girl_friends/provider/auth_provider.dart';
 import 'package:ai_girl_friends/screen/chat/chat.dart';
 import 'package:ai_girl_friends/screen/girl_profile/girl_profile.dart';
+import 'package:ai_girl_friends/screen/girl_profile/unlock_profile.dart';
 import 'package:ai_girl_friends/screen/home/home.dart';
 import 'package:ai_girl_friends/screen/login/login.dart';
 import 'package:ai_girl_friends/screen/premium/premium.dart';
@@ -51,6 +52,14 @@ final routerProvider = Provider<GoRouter>((ref) {
                 path:
                     '${GirlProfileScreen.direction}/:${GirlProfileScreen.argProfileId}',
                 builder: (context, state) => GirlProfileScreen(
+                      profileId:
+                          state.params[GirlProfileScreen.argProfileId] ?? "",
+                    )),
+            GoRoute(
+                name: UnlockProfileScreen.direction,
+                path:
+                    '${UnlockProfileScreen.direction}/:${UnlockProfileScreen.argProfileId}',
+                builder: (context, state) => UnlockProfileScreen(
                       profileId:
                           state.params[GirlProfileScreen.argProfileId] ?? "",
                     )),

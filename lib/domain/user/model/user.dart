@@ -14,6 +14,7 @@ class User extends Equatable {
   String largeBackground = "";
   String profileBackground = "";
   String gifAvatar = "";
+  String unlockBackground = "";
   String job = "";
   int mainColor = 0xFFFFFFFF;
   int backgroundColor = 0xFFFFFFFF;
@@ -36,6 +37,7 @@ class User extends Equatable {
     this.largeBodyBlurCutOff = "",
     this.largeBackground = "",
     this.gifAvatar = "",
+    this.unlockBackground = "",
     this.job = "",
     this.profileInterests = const [],
     this.mainColor = 0xFFFFFFFF,

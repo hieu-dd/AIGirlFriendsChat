@@ -86,6 +86,7 @@ List<User> _users = [
     largeBody: 'assets/images/jane.png',
     largeBodyBlurCutOff: 'assets/images/jane_bg.png',
     largeBackground: 'assets/images/jane_large_bg.png',
+    unlockBackground: 'assets/images/jane_unlock_bg.png',
     enable: false,
   ),
 ];

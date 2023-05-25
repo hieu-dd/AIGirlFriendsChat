@@ -75,6 +75,7 @@ flutter:
     - assets/images/jane.png
     - assets/images/jane_bg.png
     - assets/images/jane_large_bg.png
+    - assets/images/jane_unlock_bg.png
     - assets/images/crown.png
     - assets/images/setting.png
     - assets/images/heart.png
